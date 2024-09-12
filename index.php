@@ -22,33 +22,26 @@ require_once("header.php");
         <div class="grid-sizer"></div>
 
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-12.jpg">
+          <img class="img-responsive" alt="" src="assets/images/16.jpg">
         </div>
 
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-05.jpg">
+          <img class="img-responsive" alt="" src="assets/images/img-15.webp">
         </div>
 
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-13.jpg">
+          <img class="img-responsive" alt="" src="assets/images/17.jpg">
         </div>
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-04.jpg">
-        </div>
-
-        <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-07.jpg">
+          <img class="img-responsive" alt="" src="assets/images/img-15.webp">
         </div>
 
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-11.jpg">
+          <img class="img-responsive" alt="" src="assets/images/18.jpg">
         </div>
 
         <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-10.jpg">
-        </div>
-        <div class="grid-item">
-          <img class="img-responsive" alt="" src="assets/images/img-03.jpg">
+          <img class="img-responsive" alt="" src="assets/images/img-15.webp">
         </div>
 
       </div>
