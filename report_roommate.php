@@ -16,7 +16,7 @@ require_once("header.php");
     <div class="row">
       <div class="col-xs-12">
         <div class="section-container-spacer">
-          <h1>รายงานการจอง</h1>
+          <h1>รายงานการจับคู่</h1>
         </div>
         <div class="section-container-spacer">
           <form class="reveal-content" action="pdf_roommate.php" method="post" enctype="multipart/form-data" target="_blank">

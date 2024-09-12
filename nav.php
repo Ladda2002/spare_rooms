@@ -58,7 +58,8 @@ if (isset($_GET['logout'])) {
             <li><a href="history_all_booking.php" title="ข้อมูลการจอง">ข้อมูลการจอง</a></li>
             <li><a href="report_booking.php" title="รายงานการจอง">รายงานการจอง</a></li>
             <li><a href="report_roommate.php" title="รายงานการจับคู่">รายงานการจับคู่</a></li>
-            <li><a href="report_contract.php" title="รายงานการขายประกัน">รายงานการขายสัญญาเช่า</a></li>
+           
+            <li><a href="report_contract.php" title="รายงานการขายสัญญาเช่า">รายงานการขายสัญญาเช่า</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
           <?php } ?>
