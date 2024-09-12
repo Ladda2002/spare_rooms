@@ -29,8 +29,8 @@ $allUserBookingApartment = getAllUserBookingApartment($_SESSION["id"]);
               <td>อีเมล</td>
               <td>ชื่อหอพัก</td>
               <td>ห้อง</td>
-              <td>สถานะ</td>
               <td>วันที่</td>
+              <td>สถานะ</td>
               <td></td>
             </tr>
           </thead>
