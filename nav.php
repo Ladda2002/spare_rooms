@@ -52,13 +52,13 @@ if (isset($_GET['logout'])) {
             <li><a href="index.php" title="หน้าหลัก">หน้าหลัก</a></li>
             <li><a href="manage_user.php?role=1" title="ข้อมูลผู้ดูแลระบบ">ข้อมูลผู้ดูแลระบบ</a></li>
             <li><a href="manage_user.php?role=2" title="ข้อมูลเจ้าของหอ">ข้อมูลเจ้าของหอ</a></li>
-            <li><a href="manage_user.php?role=3" title="ข้อมูลผู้ขายประกัน">ข้อมูลผู้ขายประกัน</a></li>
+            <li><a href="manage_user.php?role=3" title="ข้อมูลผู้ขายประกัน">ข้อมูลผู้ขายสัญญาเช่า</a></li>
             <li><a href="manage_user.php?role=4" title="ข้อมูลเจ้าของห้อง">ข้อมูลเจ้าของห้อง</a></li>
             <li><a href="manage_user.php?role=5" title="ข้อมูลผู้หาห้องเช่า">ข้อมูลผู้หาห้องเช่า</a></li>
             <li><a href="history_all_booking.php" title="ข้อมูลการจอง">ข้อมูลการจอง</a></li>
             <li><a href="report_booking.php" title="รายงานการจอง">รายงานการจอง</a></li>
             <li><a href="report_roommate.php" title="รายงานการจับคู่">รายงานการจับคู่</a></li>
-            <li><a href="report_contract.php" title="รายงานการขายประกัน">รายงานการขายประกัน</a></li>
+            <li><a href="report_contract.php" title="รายงานการขายประกัน">รายงานการขายสัญญาเช่า</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
           <?php } ?>
