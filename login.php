@@ -42,8 +42,8 @@ if(isset($_POST["submit"])){
                 </div>
               </div>
               <div class="col-md-6" >
-                <div class="col-xs-12 col-md-12 section-container-spacer" align="center">
-                  <img class="img-responsive" alt="" src="images/login_ico.png" id="blah">
+                <div class="col-xs-12 col-md-12 section-container-spacer" align="center" style="width: 400px; margin-left: 100px;">
+                  <img class="img-responsive" alt="" src="images/circular_image.png" id="blah">
                 </div>
               </div>
             </div>
