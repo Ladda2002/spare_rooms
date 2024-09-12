@@ -99,13 +99,13 @@ if($_GET["id"] == ""){
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>ราคาห้อง (ต่อเดือน)</label>
+                      <label>ราคาห้อง (หารแล้ว)</label>
                       <input type="text" class="form-control" id="room_price" name="room_price" value="<?php echo $currentRoom["room_price"];?>">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label>ค่ามัดจำ</label>
+                      <label>ค่ามัดจำ (หารแล้ว)</label>
                       <input type="text" class="form-control" id="room_rent" name="room_rent" value="<?php echo $currentRoom["room_rent"];?>">
                     </div>
                   </div>
