@@ -79,7 +79,6 @@ if (isset($_GET['logout'])) {
           <?php } ?>
           <?php if($_SESSION['role'] == 4){ ?>
             <li><a href="index.php" title="หน้าหลัก">หน้าหลัก</a></li>
-            <li><a href="all_roomate.php" title="ค้นหารูมเมท">ค้นหารูมเมท</a></li>
             <li><a href="manage_user_room.php" title="จัดการห้องพัก">จัดการห้องพัก</a></li>
             <li><a href="manage_request_roommate.php" title="ตรวจสอบคำขอ">ตรวจสอบคำขอ<?php if($checkNewRequest["numReq"] != 0){ ?><span class="badge"><?php echo $checkNewRequest["numReq"];?></span><?php } ?></a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
