@@ -98,7 +98,7 @@ if(isset($_POST["submit"])){
                       <select name="role" class="form-control" required>
                         <option value="">-- โปรดระบุสถานะ --</option>
                         <option value="2" >เจ้าของหอ</option>
-                        <option value="3" >ผู้ขายประกัน</option>
+                        <option value="3" >ผู้ขายสัญญาเช่า</option>
                         <option value="4" >เจ้าของห้อง</option>
                         <option value="5" >ผู้หาห้องเช่า</option>
                       </select>
