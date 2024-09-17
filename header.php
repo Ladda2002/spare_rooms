@@ -37,7 +37,7 @@ $gender_map = array( 1=>'ชาย',2=>'หญิง');
 $status_map = array( 1=>'โสด',2=>'มีแฟน');
 $question_map = array( 5=>'ดีมาก',4=>'ดี',3=>'ปานกลาง',2=>'น้อย',1=>'น้อยมาก');
 $apart_type_map = array( 1=>'หอรวม',2=>'หอหญิง',3=>'หอชาย');
-$role_map = array( 1=>'<label style="color:red">ผู้ดูแลระบบ</label>',2=>'<label style="color:blue">เจ้าของหอ</label>',3=>'<label style="color:green">ผู้ขายประกัน</label>',4=>'<label style="color:black">เจ้าของห้อง</label>',5=>'<label style="color:violet">ผู้หาห้องเช่า</label>');
+$role_map = array( 1=>'<label style="color:red">ผู้ดูแลระบบ</label>',2=>'<label style="color:blue">เจ้าของหอ</label>',3=>'<label style="color:green">ผู้ขายสัญญา</label>',4=>'<label style="color:black">เจ้าของห้อง</label>',5=>'<label style="color:violet">ผู้หาห้องเช่า</label>');
 $booking_map = array( 0=>'<label style="color:red">ยกเลิก</label>',1=>'<label style="color:blue">รอยืนยัน</label>',2=>'<label style="color:green">ยืนยัน</label>');
 $buy_map = array( 0=>'<label style="color:red">ยกเลิก</label>',1=>'<label style="color:blue">รอยืนยัน</label>',2=>'<label style="color:green">ยืนยัน</label>');
 ?>
