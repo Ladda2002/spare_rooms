@@ -43,7 +43,7 @@ $allUserBuyContract = getAllUserBuyContract($_SESSION["id"]);
                   <td><?php echo $data["buy_name"];?></td>
                   <td><?php echo $data["buy_phone"];?></td>
                   <td><?php echo $data["buy_email"];?></td>
-                  <td><?php echo $data["apart_name"];?></td>
+                  <td><?php echo $data["apartment"];?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo formatDateFull($data["buy_date"]);?></td>
                   <td><?php echo $buy_map[$data["buy_status"]];?></td>

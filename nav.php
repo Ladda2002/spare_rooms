@@ -1,5 +1,6 @@
 ﻿<!-- Add your content of header -->
 <?php
+$user = getUser($_SESSION["id"]);
 $checkNewPending = getCheckNewPending($_SESSION["id"]);
 $checkNewRequest = getCheckNewRequest($_SESSION["id"]);
 $checkNewRequestBuy = getCheckNewRequestBuy($_SESSION["id"]);
@@ -39,7 +40,12 @@ if (isset($_GET['logout'])) {
           <img class="img-responsive site-logo" alt="" src="./assets/images/mashup-logo.svg">
           Spare Room
         </a>
-        <p>จองห้องพัก ซื้อ-ขายสัญญาหอพัก หารูมเมท ลงประกาศฟรี!</p>
+        <?php if($_SESSION['id'] == ""){ ?>
+          <p>จองห้องพัก ซื้อ-ขายสัญญาหอพัก หารูมเมท ลงประกาศฟรี!</p>
+        <?php }else{ ?>
+          <p>จองห้องพัก ซื้อ-ขายสัญญาหอพัก หารูมเมท ลงประกาศฟรี!</p>
+          <p><?php echo $user['username'];?> <br/> <?php echo $role_map[$user['role']];?></p>
+        <?php } ?>
       </div>
       <ul class="nav">
         <?php if($_SESSION['id'] == "" && empty($_SESSION['id'])){ ?>
@@ -58,7 +64,6 @@ if (isset($_GET['logout'])) {
             <li><a href="history_all_booking.php" title="ข้อมูลการจอง">ข้อมูลการจอง</a></li>
             <li><a href="report_booking.php" title="รายงานการจอง">รายงานการจอง</a></li>
             <li><a href="report_roommate.php" title="รายงานการจับคู่">รายงานการจับคู่</a></li>
-           
             <li><a href="report_contract.php" title="รายงานการขายสัญญาเช่า">รายงานการขายสัญญาเช่า</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
@@ -93,6 +98,7 @@ if (isset($_GET['logout'])) {
             <li><a href="history_booking.php" title="ประวัติการจอง">ประวัติการจอง</a></li>
             <li><a href="history_request.php" title="ประวัติคำขอ">ประวัติคำขอ</a></li>
             <li><a href="history_contract.php" title="ประวัติการซื้อสัญญา">ประวัติการซื้อสัญญา</a></li>
+            <li><a href="edit_question_finding.php" title="ทำแบบประเมิน">ทำแบบประเมิน</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
           <?php } ?>
@@ -108,7 +114,7 @@ if (isset($_GET['logout'])) {
         </ul>
 
         <nav class="nav-footer">
-          <p class="nav-footer-social-buttons">
+          <!--<p class="nav-footer-social-buttons">
             <a class="fa-icon" href="https://www.instagram.com/" title="">
               <i class="fa fa-instagram"></i>
             </a>
@@ -118,7 +124,7 @@ if (isset($_GET['logout'])) {
             <a class="fa-icon" href="https://twitter.com/" title="">
               <i class="fa fa-twitter"></i>
             </a>
-          </p>
+          </p>-->
           <p>© Create By <br/> แสงตะวัน มีบง <br/> ลัดดาวรรณ ภูพวก</p>
         </nav>  
       </div> 

@@ -5,7 +5,18 @@
 require_once("header.php");
 ?>
 <?php 
-$allRoommate = getAllRoommate();
+
+$checkQuestionaireFindding = getCheckQuestionaireFindding($_SESSION["id"]);
+if($checkQuestionaireFindding["numCount"] == 0){
+  echo ("<script language='JavaScript'>
+    alert('คุณต้องทำแบบประเมินก่อน เพื่อทำการค้นหาห้อง');
+    window.location.href='edit_question_finding.php';
+    </script>");  
+
+}else{
+  $allRoommate = getAllRoommateFindding($_SESSION["id"]);
+}
+
 ?>
 <body>
 
@@ -31,6 +42,7 @@ $allRoommate = getAllRoommate();
             <img class="img-responsive" alt="" src="images/room/<?php echo $data["room_image"];?>" style="width: 514px;height: 342px;">
             <h2><?php echo $data["room_name"];?></h2>
             <p><?php echo $room_map[$data["room_type"]];?></p>
+            <p>คะแนน : <?php echo number_format($data["room_score"],2);?></p>
             <a href="detail_roomate.php?id=<?php echo $data['id'];?>" class="btn btn-primary" title=""> รายละเอียด</a>
           </div>
 

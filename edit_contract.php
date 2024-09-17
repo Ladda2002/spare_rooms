@@ -9,14 +9,16 @@ require_once("header.php");
 $allApartment = getAllApartment();
 $currentRoom = getCurrentRoom($_GET["id"]);
 if(isset($_POST["submit"])){
+
   if($_POST["id"] == ""){
     $room_gallery = $_FILES['room_gallery']['name'];
     $total = count($_FILES['room_gallery']['name']);
-    saveRoomContract($_POST["apartments_id"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["contract_year"]);
+
+    saveRoomContract($_POST["apartment"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["contract_year"],$_POST["contract_end"],$_FILES["contract_file"]["name"],$_POST["room_lat"],$_POST["room_lng"]);
   }else{
     $room_gallery = $_FILES['room_gallery']['name'];
     $total = count($_FILES['room_gallery']['name']);
-    editRoomContract($_POST["id"],$_POST["apartments_id"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["contract_year"]);
+    editRoomContract($_POST["id"],$_POST["apartment"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["contract_year"],$_POST["contract_end"],$_FILES["contract_file"]["name"],$_POST["room_lat"],$_POST["room_lng"]);
   }
 }
 
@@ -26,7 +28,7 @@ if($_GET["id"] == ""){
   $txtHead = "แก้ไข ห้องพัก";
 }
 ?>
-<body>
+<body onload="initialize();">
 
   <?php
   require_once("nav.php");
@@ -50,7 +52,7 @@ if($_GET["id"] == ""){
               <div class="col-md-6">
 
                 <div class="row">
-                  <div class="col-md-6">
+                  <!--<div class="col-md-6">
                     <div class="form-group">
                       <label>หอพัก</label>
                       <select name="apartments_id" class="form-control" id="apartments_id" required>
@@ -65,6 +67,12 @@ if($_GET["id"] == ""){
                           <option value="<?php echo $data['id']?>" <?php echo $selected;?>><?php echo $data['apart_name']?></option>
                         <?php } ?>
                       </select>
+                    </div>
+                  </div>-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>หอพัก</label>
+                      <input type="text" class="form-control" id="apartment" name="apartment" value="<?php echo $currentRoom["apartment"];?>">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -117,6 +125,20 @@ if($_GET["id"] == ""){
                   </div>
                 </div>
                 <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>วันที่สิ้นสุดสัญญา</label>
+                      <input type="text" class="form-control" id="contract_end" name="contract_end" value="<?php echo formatDateFull($currentRoom["contract_end"]);?>">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ไฟล์หนังสือสัญญา</label>
+                      <input type="file" class="form-control" name="contract_file" id="imgInp2" >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>รายละเอียดห้องพัก </label>
@@ -135,6 +157,27 @@ if($_GET["id"] == ""){
                     <div class="form-group">
                       <label>รูปภายในห้อง (สามารถเลือกได้มากกว่า 1 รูป)</label>
                       <input type="file" id="room_gallery" class="form-control" name="room_gallery[]" multiple >
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ละติจูด</label>
+                      <input type="text" class="form-control" id="lat" name="room_lat" value="<?php if($_GET['id'] == ""){ echo "16.2439983";} echo $currentRoom["room_lat"];?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ลองติจูด</label>
+                      <input type="text" class="form-control" id="lng" name="room_lng" value="<?php if($_GET['id'] == ""){ echo "103.246472";} echo $currentRoom["room_lng"];?>" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <div id="map_canvas" style="width: auto; height: 500px;"></div>
                     </div>
                   </div>
                 </div>
@@ -180,6 +223,48 @@ if($_GET["id"] == ""){
     $("#imgInp").change(function() {
       readURL(this);
     });
+  </script>
+  <script>
+
+    $('#contract_end').datetimepicker({
+      lang:'th',
+      timepicker:false,
+      format:'d/m/Y'
+    });
+
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
+  <script type="text/javascript">
+    function initialize() {
+
+      var la = $("#lat").val();
+      var ln = $("#lng").val();
+      var map = new google.maps.Map(document.getElementById('map_canvas'), {
+        zoom: 12,
+        center: new google.maps.LatLng(la, ln),
+        mapTypeId: google.maps.MapTypeId.DRIVER
+      });
+
+      var vMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(la, ln),
+        draggable: true
+      });
+
+      google.maps.event.addListener(vMarker, 'dragend', function (evt) {
+        $("#lat").val(evt.latLng.lat().toFixed(6));
+        $("#lng").val(evt.latLng.lng().toFixed(6));
+
+
+        var p1 = new google.maps.LatLng(la, ln);
+        var p2 = new google.maps.LatLng(evt.latLng.lat(), evt.latLng.lng());
+
+
+      });
+
+      map.setCenter(vMarker.position);
+
+      vMarker.setMap(map);
+    }
   </script>
 </body>
 
