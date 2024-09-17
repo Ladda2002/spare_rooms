@@ -8,7 +8,7 @@ require_once("header.php");
 $allRoomInApartment = getAllRoomInApartmentOpen($_GET["apartments_id"]);
 ?>
 <body>
-
+/
   <?php
   require_once("nav.php");
   ?>
