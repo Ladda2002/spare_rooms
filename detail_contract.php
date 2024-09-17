@@ -26,8 +26,8 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
       <div class="col-xs-12 col-md-6">
 
         <h1>ห้อง <?php echo $currentRoom["room_name"];?></h1>
-        <input type="hidden" class="form-control" id="lat" value="<?php echo $currentRoom["apart_lat"];?>">
-        <input type="hidden" class="form-control" id="lng" value="<?php echo $currentRoom["apart_lng"];?>">
+        <input type="hidden" class="form-control" id="lat" value="<?php echo $currentRoom["room_lat"];?>">
+        <input type="hidden" class="form-control" id="lng" value="<?php echo $currentRoom["room_lng"];?>">
         <h3>ข้อมูลห้องพัก </h3>
         <div class="row">
           <div class="col-md-4">
@@ -37,19 +37,7 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentRoom["apart_name"];?></label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>ที่ตั้ง</label>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="form-group">
-              <label><?php echo $currentRoom["apart_address"];?></label>
+              <label><?php echo $currentRoom["apartment"];?></label>
             </div>
           </div>
         </div>
@@ -134,6 +122,18 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
           <div class="col-md-8">
             <div class="form-group">
               <label><?php echo $currentUserContract["username"];?></label>
+            </div>
+          </div>
+        </div>
+          <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>ดาวน์โหลดไฟล์สัญญา</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <a href="images/contract/<?php echo $currentRoom["contract_file"];?>" target="_blank">ดูสัญญา</a>
             </div>
           </div>
         </div>

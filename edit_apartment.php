@@ -8,9 +8,20 @@ require_once("header.php");
 $currentApartment = getCurrentApartment($_GET["id"]);
 if(isset($_POST["submit"])){
   if($_POST["id"] == ""){
+<<<<<<< HEAD
     saveApartment($_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],$_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
   }else{
     editApartment($_POST["id"],$_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],$_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
+=======
+    saveApartment($_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],$_POST["apart_number"],
+      $_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],
+      $_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
+  }else{
+    editApartment($_POST["id"],$_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],
+      $_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],
+      $_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],
+      $_POST["apart_lng"]);
+>>>>>>> a903ed3c31789258657373f2f3349ab1be6e0541
   }
 }
 
@@ -38,8 +49,6 @@ if($_GET["id"] == ""){
         <div class="section-container-spacer">
           <form class="reveal-content" action="" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" name="id" value="<?php echo $currentApartment["aid"];?>">
-            <input type="hidden" class="form-control" name="apart_lat" id="lat" value="<?php if($_GET['id'] == ""){ echo "16.2439982"; }else{ echo $currentApartment["apart_lat"]; }?>">
-            <input type="hidden" class="form-control" name="apart_lng" id="lng" value="<?php if($_GET['id'] == ""){ echo "103.244176"; }else{ echo $currentApartment["apart_lng"]; }?>">
             <input type="hidden" class="form-control" name="users_id" value="<?php echo $_SESSION["id"];?>">
             <div class="row">
               <div class="col-md-6">
@@ -124,9 +133,27 @@ if($_GET["id"] == ""){
                     </div>
                   </div>
                 </div>
+<<<<<<< HEAD
                 
 
                 <div align="right">
+=======
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ละติจูด</label>
+                      <input type="text" class="form-control" id="lat" name="apart_lat" value="<?php if($_GET['id'] == ""){ echo "16.2439983";} echo $currentApartment["apart_lat"];?>">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>ลองติจูด</label>
+                      <input type="text" class="form-control" id="lng" name="apart_lng" value="<?php if($_GET['id'] == ""){ echo "103.246472";} echo $currentApartment["apart_lng"];?>">
+                    </div>
+                  </div>
+                </div>
+                <div align="right" style="margin-top: 20px;">
+>>>>>>> a903ed3c31789258657373f2f3349ab1be6e0541
                   <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
                 </div>
               </div>
