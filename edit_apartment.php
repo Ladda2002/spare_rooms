@@ -9,13 +9,13 @@ $currentApartment = getCurrentApartment($_GET["id"]);
 if(isset($_POST["submit"])){
   if($_POST["id"] == ""){
     saveApartment($_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],$_POST["apart_number"],
-    $_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],
-    $_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
+      $_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],
+      $_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
   }else{
     editApartment($_POST["id"],$_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],
-    $_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],
-    $_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],
-    $_POST["apart_lng"]);
+      $_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],
+      $_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],
+      $_POST["apart_lng"]);
   }
 }
 
@@ -43,8 +43,6 @@ if($_GET["id"] == ""){
         <div class="section-container-spacer">
           <form class="reveal-content" action="" method="post" enctype="multipart/form-data">
             <input type="hidden" class="form-control" name="id" value="<?php echo $currentApartment["aid"];?>">
-            <input type="hidden" class="form-control" name="apart_lat" id="lat" value="<?php if($_GET['id'] == ""){ echo "16.2439982"; }else{ echo $currentApartment["apart_lat"]; }?>">
-            <input type="hidden" class="form-control" name="apart_lng" id="lng" value="<?php if($_GET['id'] == ""){ echo "103.244176"; }else{ echo $currentApartment["apart_lng"]; }?>">
             <input type="hidden" class="form-control" name="users_id" value="<?php echo $_SESSION["id"];?>">
             <div class="row">
               <div class="col-md-6">
@@ -129,21 +127,20 @@ if($_GET["id"] == ""){
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label>ละติจูด</label>
-                      <input type="text" class="form-control" id="apart_lat" name="apart_lat" value="<?php echo $currentApartment["apart_lat"];?>">
+                      <input type="text" class="form-control" id="lat" name="apart_lat" value="<?php if($_GET['id'] == ""){ echo "16.2439983";} echo $currentApartment["apart_lat"];?>">
                     </div>
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label>ลองติจูด</label>
-                      <input type="text" class="form-control" id="apart_lng" name="apart_lng" value="<?php echo $currentApartment["apart_lng"];?>">
+                      <input type="text" class="form-control" id="lng" name="apart_lng" value="<?php if($_GET['id'] == ""){ echo "103.246472";} echo $currentApartment["apart_lng"];?>">
                     </div>
                   </div>
-               
-               
-
+                </div>
                 <div align="right" style="margin-top: 20px;">
                   <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
                 </div>
@@ -185,7 +182,7 @@ if($_GET["id"] == ""){
       readURL(this);
     });
   </script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
   <script type="text/javascript">
     function initialize() {
 

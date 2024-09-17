@@ -42,9 +42,12 @@ $allHistoryUserRequest = getAllHistoryUserRequest($_SESSION["id"]);
                   <td><?php echo $data["username"];?></td>
                   <td><?php echo $data["phone"];?></td>
                   <td><?php echo $data["email"];?></td>
-                  <td><?php echo $data["apart_name"];?></td>
+                  <td><?php echo $data["apartment"];?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $request_map[$data["request_status"]];?></td>
+                  <td style="text-align: right;">
+                    <a href="detail_history_request.php?id=<?php echo $data['id'];?>" class="btn btn-warning btn-lg">รายละเอียด</a>
+                  </td>
                 </tr>
               <?php } ?>
             <?php } ?>

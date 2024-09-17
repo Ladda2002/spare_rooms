@@ -6,11 +6,6 @@ require_once("header.php");
 ?>
 <?php 
 $currentRequest = getCurrentRequest($_GET["id"]);
-$currentQuestionaireFindding = getCurrentQuestionaireFindding($currentRequest["qusers_id"]);
-
-if(isset($_POST["submit"])){
-  updateRequest($_POST["requests_id"],$_POST["request_status"]);
-}
 ?>
 <body>
 
@@ -146,7 +141,7 @@ if(isset($_POST["submit"])){
             </thead>
             <tbody>
               <?php $total = 0;?>
-              <?php $total = ($currentQuestionaireFindding["q1"] + $currentQuestionaireFindding["q2"] + $currentQuestionaireFindding["q3"]+$currentQuestionaireFindding["q4"]+$currentQuestionaireFindding["q5"]+$currentQuestionaireFindding["q6"]+$currentQuestionaireFindding["q7"]+$currentQuestionaireFindding["q8"]+$currentQuestionaireFindding["q9"]+$currentQuestionaireFindding["q10"]) / 10;?>
+              <?php $total = ($currentRequest["q1"] + $currentRequest["q2"] + $currentRequest["q3"]+$currentRequest["q4"]+$currentRequest["q5"]+$currentRequest["q6"]+$currentRequest["q7"]+$currentRequest["q8"]+$currentRequest["q9"]+$currentRequest["q10"]) / 10;?>
               <?php 
               if($total >= 1.00 && $total <= 1.99){
                 $txtRes = "น้อยมาก";
@@ -162,43 +157,43 @@ if(isset($_POST["submit"])){
               ?>
               <tr>
                 <td>ชอบสัตว์มากน้อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q1"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q1"]];?></td>
               </tr>
               <tr>
                 <td>นอนดึกมากน้อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q2"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q2"]];?></td>
               </tr>
               <tr>
                 <td>ชอบทำความสะอาดมากน้อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q3"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q3"]];?></td>
               </tr>
               <tr>
                 <td>ชอบเล่นเกมมากน้อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q4"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q4"]];?></td>
               </tr>
               <tr>
                 <td>ดื่มแอลกอฮอลล์บ่อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q5"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q5"]];?></td>
               </tr>
               <tr>
                 <td>สูบบุหรี่บ่อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q6"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q6"]];?></td>
               </tr>
               <tr>
                 <td>เที่ยวกลางคืนบ่อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q7"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q7"]];?></td>
               </tr>
               <tr>
                 <td>ชอบทำอาหารบ่อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q8"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q8"]];?></td>
               </tr>
               <tr>
                 <td>อยู่ห้องบ่อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q9"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q9"]];?></td>
               </tr>
               <tr>
                 <td>ต้องการความเป็นส่วนตัวมากน้อยแค่ไหน</td>
-                <td><?php echo $question_map[$currentQuestionaireFindding["q10"]];?></td>
+                <td><?php echo $question_map[$currentRequest["q10"]];?></td>
               </tr>
               <tr>
                 <td>คะแนนที่ได้</td>
@@ -208,29 +203,14 @@ if(isset($_POST["submit"])){
                 <td>เกณฑ์การประเมิน</td>
                 <td style="color: red;"><?php echo $txtRes;?></td>
               </tr>
+              <tr>
+                <td>สถานะ</td>
+                <td style="color: red;"><?php echo $request_map[$currentRequest["request_status"]];?></td>
+              </tr>
             </tbody>
           </table>
         </div>
 
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>อัพเดทสถานะ</label>
-          </div>
-        </div>
-        <div class="col-md-8">
-          <div class="form-group">
-            <select name="request_status" class="form-control" required>
-              <option value="">-- โปรดระบุสถานะ --</option>
-              <option value="0" >ปฏิเสธคำขอ</option>
-              <option value="2" >ยืนยันคำขอ</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div align="center">
-        <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
       </div>
     </form>
 

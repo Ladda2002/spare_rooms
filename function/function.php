@@ -137,7 +137,6 @@ function editUser($id,$username,$password,$address,$email,$phone,$gender,$status
 		}
 	}else{
 		$sql="UPDATE users SET username='".$username."',password='".$password."',address='".$address."',email='".$email."',phone='".$phone."',gender='".$gender."',status='".$status."',role='".$role."' WHERE id = '".$id."'";
-		mysqli_query($con,$sql);
 
 	}
 	mysqli_query($con,$sql);
@@ -983,21 +982,38 @@ function getAllBookingApartment(){
 
 }
 
-function saveRoomRental($apartments_id,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$room_remark){
+function saveRoomRental($apartment,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$room_remark,$contract_file,$room_lat,$room_lng){
 
 	global $con;
 
-	if($room_image != null){
-		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]))
+	if($room_image != null && $contract_file != null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]) && move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
 		{
 
-			$sql = "INSERT INTO rooms (apartments_id, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, room_remark) VALUES('".$apartments_id."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$room_remark."')";
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, room_remark, contract_file, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$room_remark."','".$_FILES["contract_file"]["name"]."','".$room_lat."','".$room_lng."')";
+			mysqli_query($con,$sql);
+			$last_id = $con->insert_id;
+
+		}
+	}else if($room_image != null && $contract_file == null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]))
+		{
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, room_remark, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$room_remark."','".$room_lat."','".$room_lng."')";
+			mysqli_query($con,$sql);
+			$last_id = $con->insert_id;
+
+		}
+	}else if($room_image == null && $contract_file != null){
+		if(move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_status, room_category, room_remark, contract_file, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$room_remark."','".$_FILES["contract_file"]["name"]."','".$room_lat."','".$room_lng."')";
 			mysqli_query($con,$sql);
 			$last_id = $con->insert_id;
 
 		}
 	}else{
-		$sql = "INSERT INTO rooms (apartments_id, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, room_remark) VALUES('".$apartments_id."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$room_remark."')";
+		$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, room_remark) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$room_remark."')";
 		mysqli_query($con,$sql);
 		$last_id = $con->insert_id;
 	}
@@ -1029,19 +1045,33 @@ function saveRoomRental($apartments_id,$room_name,$bed_type,$room_type,$room_pri
 
 }
 
-function editRoomRental($id,$apartments_id,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$room_remark){
+function editRoomRental($id,$apartment,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$room_remark,$contract_file,$room_lat,$room_lng){
 
 	global $con;
 
-	if($room_image != null){
+	if($room_image != null && $contract_file != null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]) && move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',room_remark='".$room_remark."',contract_file='".$_FILES["contract_file"]["name"]."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
+			mysqli_query($con,$sql);
+
+		}
+	}else if($room_image != null && $contract_file == null){
 		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]))
 		{
-			$sql="UPDATE rooms SET apartments_id='".$apartments_id."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',room_remark='".$room_remark."' WHERE id = '".$id."'";
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',room_remark='".$room_remark."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
+			mysqli_query($con,$sql);
+
+		}
+	}else if($room_image == null && $contract_file != null){
+		if(move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',room_remark='".$room_remark."',contract_file='".$_FILES["contract_file"]["name"]."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
 			mysqli_query($con,$sql);
 
 		}
 	}else{
-		$sql="UPDATE rooms SET apartments_id='".$apartments_id."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',room_remark='".$room_remark."' WHERE id = '".$id."'";
+		$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',room_remark='".$room_remark."' WHERE id = '".$id."'";
 
 		mysqli_query($con,$sql);
 
@@ -1198,14 +1228,65 @@ function getAllRoommate(){
 
 }
 
-function saveRequest($rooms_id,$users_id,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10){
+function getAllRoommateFindding($users_id){
+	global $con;
+
+	$res = mysqli_query($con,"select * from questionaires_finding where users_id = '".$users_id."' ");
+	
+	while($row = mysqli_fetch_array($res)) {
+		$data['totals'] = $row['totals'];
+	}
+
+	$sql = "SELECT *,r.id as rid 
+	FROM rooms r 
+	LEFT JOIN apartments a ON r.apartments_id = a.id 
+	WHERE r.room_category = '2' AND r.room_score <= '".$data['totals']."' AND r.room_status = '1'
+	ORDER BY r.room_score DESC";
+	$res = mysqli_query($con,$sql);
+
+	$data = array();
+	while($row = mysqli_fetch_assoc($res)) {
+		$namesArray[] = array(
+			'id' => $row['rid'],
+			'apartments_id' => $row['apartments_id'],
+			'room_name' => $row['room_name'],
+			'bed_type' => $row['bed_type'],
+			'room_score' => $row['room_score'],
+			'room_type' => $row['room_type'],
+			'room_price' => $row['room_price'],
+			'room_rent' => $row['room_rent'],
+			'room_detail' => $row['room_detail'],
+			'room_image' => $row['room_image'],
+			'room_status' => $row['room_status'],
+			'users_id' => $row['users_id'],
+			'apart_address' => $row['apart_address'],
+			'apart_type' => $row['apart_type'],
+			'apart_name' => $row['apart_name'],
+			'apart_number' => $row['apart_number'],
+			'apart_class' => $row['apart_class'],
+			'apart_elevator' => $row['apart_elevator'],
+			'apart_contract' => $row['apart_contract'],
+			'apart_lat' => $row['apart_lat'],
+			'apart_lng' => $row['apart_lng'],
+			'apart_detail' => $row['apart_detail'],
+			'apart_image' => $row['apart_image']);
+	}
+
+	$data = $namesArray;
+
+	return $data;
+	mysqli_close($con);
+
+}
+
+function saveRequest($rooms_id,$users_id,$req_name,$req_phone,$req_email){
 	
 	global $con;
 
 	$yThai = date("Y")+543;
 	$dateNow = $yThai.date("-m-d");
 
-	$sql = "INSERT INTO requests (rooms_id, users_id, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, request_status) VALUES('".$rooms_id."','".$users_id."','".$q1."','".$q2."','".$q3."','".$q4."','".$q5."','".$q6."','".$q7."','".$q8."','".$q9."','".$q10."','1')";
+	$sql = "INSERT INTO requests (rooms_id, users_id, req_name, req_phone, req_email, request_status) VALUES('".$rooms_id."','".$users_id."','".$req_name."','".$req_phone."','".$req_email."','1')";
 	mysqli_query($con,$sql);
 	mysqli_close($con);
 	echo ("<script language='JavaScript'>
@@ -1300,6 +1381,7 @@ function getAllHistoryUserRequest($users_id){
 			'apart_address' => $row['apart_address'],
 			'apart_type' => $row['apart_type'],
 			'apart_name' => $row['apart_name'],
+			'apartment' => $row['apartment'],
 			'apart_number' => $row['apart_number'],
 			'apart_class' => $row['apart_class'],
 			'apart_elevator' => $row['apart_elevator'],
@@ -1350,7 +1432,7 @@ function getCurrentRequest($id){
 
 	global $con;
 
-	$sql = "SELECT *,q.id as qid 
+	$sql = "SELECT *,q.id as qid,q.users_id as qusers_id  
 	FROM requests q 
 	LEFT JOIN users u ON q.users_id = u.id 
 	LEFT JOIN rooms r ON q.rooms_id = r.id 
@@ -1378,24 +1460,36 @@ function updateRequest($requests_id,$request_status){
 
 }
 
-function saveRoomContract($apartments_id,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$contract_year){
+function saveRoomContract($apartment,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$contract_year,$contract_end,$contract_file,$room_lat,$room_lng){
 
 	global $con;
 
-	if($room_image != null){
+	$arrDate1 = explode("/", $contract_end);
+	$convert_contract_end = $arrDate1[2].'-'.$arrDate1[1].'-'.$arrDate1[0];
+
+	if($room_image != null && $contract_file != null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]) && move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, contract_year, contract_end, contract_file, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$contract_year."','".$convert_contract_end."','".$_FILES["contract_file"]["name"]."','".$room_lat."','".$room_lng."')";
+
+		}
+	}else if($room_image == null && $contract_file != null){
+		if(move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_status, room_category, contract_year, contract_end, contract_file, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$contract_year."','".$convert_contract_end."','".$_FILES["contract_file"]["name"]."','".$room_lat."','".$room_lng."')";
+		}
+	}else if($room_image != null && $contract_file == null){
 		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]))
 		{
 
-			$sql = "INSERT INTO rooms (apartments_id, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, contract_year) VALUES('".$apartments_id."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$contract_year."')";
-			mysqli_query($con,$sql);
-			$last_id = $con->insert_id;
+			$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, contract_year, contract_end, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','".$_FILES["room_image"]["name"]."','1','".$room_category."','".$contract_year."','".$convert_contract_end."','".$room_lat."','".$room_lng."')";
 
 		}
 	}else{
-		$sql = "INSERT INTO rooms (apartments_id, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, contract_year) VALUES('".$apartments_id."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$contract_year."')";
-		mysqli_query($con,$sql);
-		$last_id = $con->insert_id;
+		$sql = "INSERT INTO rooms (apartment, users_id, room_name, bed_type, room_type, room_price, room_rent, room_detail, room_image, room_status, room_category, contract_year, contract_end, room_lat, room_lng) VALUES('".$apartment."','".$users_id."','".$room_name."','".$bed_type."','".$room_type."','".$room_price."','".$room_rent."','".$room_detail."','1','".$room_category."','".$contract_year."','".$convert_contract_end."','".$room_lat."','".$room_lng."')";
 	}
+	mysqli_query($con,$sql);
+	$last_id = $con->insert_id;
 
 
 
@@ -1424,19 +1518,36 @@ function saveRoomContract($apartments_id,$room_name,$bed_type,$room_type,$room_p
 
 }
 
-function editRoomContract($id,$apartments_id,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$contract_year){
+function editRoomContract($id,$apartment,$room_name,$bed_type,$room_type,$room_price,$room_rent,$room_detail,$room_image,$room_gallery,$total,$users_id,$room_category,$contract_year,$contract_end,$contract_file,$room_lat,$room_lng){
 
 	global $con;
 
-	if($room_image != null){
-		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"]))
+	$arrDate1 = explode("/", $contract_end);
+	$convert_contract_end = $arrDate1[2].'-'.$arrDate1[1].'-'.$arrDate1[0];
+
+	if($room_image != null && $contract_file != null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"])  && move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
 		{
-			$sql="UPDATE rooms SET apartments_id='".$apartments_id."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',contract_year='".$contract_year."' WHERE id = '".$id."'";
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',contract_year='".$contract_year."',contract_end='".$convert_contract_end."',contract_file='".$_FILES["contract_file"]["name"]."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
+			mysqli_query($con,$sql);
+
+		}
+	}else if($room_image == null && $contract_file != null){
+		if(move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',contract_year='".$contract_year."',contract_end='".$convert_contract_end."',contract_file='".$_FILES["contract_file"]["name"]."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
+			mysqli_query($con,$sql);
+
+		}
+	}else if($room_image != null && $contract_file == null){
+		if(move_uploaded_file($_FILES["room_image"]["tmp_name"],"images/room/".$_FILES["room_image"]["name"])  && move_uploaded_file($_FILES["contract_file"]["tmp_name"],"images/contract/".$_FILES["contract_file"]["name"]))
+		{
+			$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_image='".$_FILES["room_image"]["name"]."',room_category='".$room_category."',contract_year='".$contract_year."',contract_end='".$convert_contract_end."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
 			mysqli_query($con,$sql);
 
 		}
 	}else{
-		$sql="UPDATE rooms SET apartments_id='".$apartments_id."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',contract_year='".$contract_year."' WHERE id = '".$id."'";
+		$sql="UPDATE rooms SET apartment='".$apartment."',users_id='".$users_id."',room_name='".$room_name."',bed_type='".$bed_type."',room_type='".$room_type."',room_price='".$room_price."',room_rent='".$room_rent."',room_detail='".$room_detail."',room_category='".$room_category."',contract_year='".$contract_year."',room_lat='".$room_lat."',room_lng='".$room_lng."' WHERE id = '".$id."'";
 
 		mysqli_query($con,$sql);
 
@@ -1508,18 +1619,18 @@ function closeContract($id){
 function getAllContract(){
 	global $con;
 
-	$sql = "SELECT *,r.id as rid 
-	FROM rooms r 
-	LEFT JOIN apartments a ON r.apartments_id = a.id 
-	WHERE r.room_category = '3'  
-	ORDER BY r.id DESC";
+	$sql = "SELECT * 
+	FROM rooms 
+	WHERE room_category = '3' AND room_status = '1' 
+	ORDER BY id DESC";
 	$res = mysqli_query($con,$sql);
 
 	$data = array();
 	while($row = mysqli_fetch_assoc($res)) {
 		$namesArray[] = array(
-			'id' => $row['rid'],
+			'id' => $row['id'],
 			'apartments_id' => $row['apartments_id'],
+			'apartment' => $row['apartment'],
 			'room_name' => $row['room_name'],
 			'bed_type' => $row['bed_type'],
 			'room_type' => $row['room_type'],
@@ -1585,6 +1696,7 @@ function getAllUserBuyContract($users_id){
 			'buy_name' => $row['buy_name'],
 			'buy_phone' => $row['buy_phone'],
 			'buy_email' => $row['buy_email'],
+			'apartment' => $row['apartment'],
 			'buy_date' => $row['buy_date'],
 			'buy_status' => $row['buy_status'],
 			'apartments_id' => $row['apartments_id'],
@@ -1697,10 +1809,8 @@ function getCheckNewRequestBuy($users_id){
 
 	$sql = "SELECT COUNT(*) as numBuy 
 	FROM buys b 
-	LEFT JOIN users u ON b.users_id = u.id 
 	LEFT JOIN rooms r ON b.rooms_id = r.id 
-	LEFT JOIN apartments a ON r.apartments_id = a.id 
-	WHERE b.users_id = '".$users_id."' AND b.buy_status = '1'";
+	WHERE r.users_id = '".$users_id."' AND b.buy_status = '1'";
 
 	$res = mysqli_query($con,$sql);
 	$result=mysqli_fetch_array($res,MYSQLI_ASSOC);
@@ -1886,6 +1996,104 @@ function getReportContract($start_date,$end_date){
 	$data = $namesArray;
 
 	return $data;
+	mysqli_close($con);
+
+}
+
+function saveQuestionaires($rooms_id,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10){
+	
+	global $con;
+
+	$res = mysqli_query($con,"select * from questionaires where rooms_id = '".$rooms_id."'");
+	
+	while($row = mysqli_fetch_array($res)) {
+		$data['rooms_id'] = $row['rooms_id'];
+	}
+	if (!empty($data)) {
+		$sql="UPDATE questionaires SET q1='".$q1."',q2='".$q2."',q3='".$q3."',q4='".$q4."',q5='".$q5."',q6='".$q6."',q7='".$q7."',q8='".$q8."',q9='".$q9."',q10='".$q10."' WHERE rooms_id = '".$rooms_id."'";
+	}else{
+		$sql = "INSERT INTO questionaires (rooms_id, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) VALUES('".$rooms_id."','".$q1."','".$q2."','".$q3."','".$q4."','".$q5."','".$q6."','".$q7."','".$q8."','".$q9."','".$q10."')";
+	}
+	
+	mysqli_query($con,$sql);
+    $total = ($q1 +  $q2 + $q3 + $q4 + $q5 + $q6 + $q7 + $q8 + $q9 + $q10) / 10;
+
+    $sql_room = "UPDATE rooms SET room_score='".$total."' WHERE id = '".$rooms_id."'";
+    mysqli_query($con,$sql_room);
+
+	mysqli_close($con);
+	echo ("<script language='JavaScript'>
+		alert('เพิ่มข้อมูลเรียบร้อย');
+		window.location.href='manage_user_room.php';
+		</script>"); 
+	
+}
+
+function getCurrentQuestionaire($rooms_id){
+
+	global $con;
+
+
+	$res = mysqli_query($con,"SELECT * FROM questionaires WHERE rooms_id = '".$rooms_id."'");
+	$result=mysqli_fetch_array($res,MYSQLI_ASSOC);
+	return $result;
+
+	mysqli_close($con);
+
+}
+
+function saveQuestionairesFindding($users_id,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$q10){
+	
+	global $con;
+
+	$res = mysqli_query($con,"select * from questionaires_finding where users_id = '".$users_id."'");
+	
+	while($row = mysqli_fetch_array($res)) {
+		$data['id'] = $row['id'];
+		$data['rooms_id'] = $row['rooms_id'];
+	}
+	if (!empty($data)) {
+		$sql="UPDATE questionaires_finding SET q1='".$q1."',q2='".$q2."',q3='".$q3."',q4='".$q4."',q5='".$q5."',q6='".$q6."',q7='".$q7."',q8='".$q8."',q9='".$q9."',q10='".$q10."' WHERE users_id = '".$users_id."'";
+		$last_id = $data['id'];
+	}else{
+		$sql = "INSERT INTO questionaires_finding (users_id, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) VALUES('".$users_id."','".$q1."','".$q2."','".$q3."','".$q4."','".$q5."','".$q6."','".$q7."','".$q8."','".$q9."','".$q10."')";
+		$last_id = $con->insert_id;
+	}
+	
+	mysqli_query($con,$sql);
+    $total = ($q1 +  $q2 + $q3 + $q4 + $q5 + $q6 + $q7 + $q8 + $q9 + $q10) / 10;
+
+    $sql_room = "UPDATE questionaires_finding SET totals='".$total."' WHERE users_id = '".$users_id."'";
+    mysqli_query($con,$sql_room);
+
+	mysqli_close($con);
+	echo ("<script language='JavaScript'>
+		alert('เพิ่มข้อมูลเรียบร้อย');
+		window.location.href='edit_question_finding.php';
+		</script>"); 
+	
+}
+
+function getCurrentQuestionaireFindding($users_id){
+
+	global $con;
+
+	$res = mysqli_query($con,"SELECT * FROM questionaires_finding WHERE users_id = '".$users_id."'");
+	$result=mysqli_fetch_array($res,MYSQLI_ASSOC);
+	return $result;
+
+	mysqli_close($con);
+
+}
+
+function getCheckQuestionaireFindding($users_id){
+
+	global $con;
+
+	$res = mysqli_query($con,"SELECT COUNT(*) as numCount FROM questionaires_finding WHERE users_id = '".$users_id."'");
+	$result=mysqli_fetch_array($res,MYSQLI_ASSOC);
+	return $result;
+
 	mysqli_close($con);
 
 }

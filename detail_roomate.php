@@ -25,8 +25,8 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
       <div class="col-xs-12 col-md-6">
 
         <h1>ห้อง <?php echo $currentRoom["room_name"];?></h1>
-        <input type="hidden" class="form-control" id="lat" value="<?php echo $currentRoom["apart_lat"];?>">
-        <input type="hidden" class="form-control" id="lng" value="<?php echo $currentRoom["apart_lng"];?>">
+        <input type="hidden" class="form-control" id="lat" value="<?php echo $currentRoom["room_lat"];?>">
+        <input type="hidden" class="form-control" id="lng" value="<?php echo $currentRoom["room_lng"];?>">
         <h3>ข้อมูลห้องพัก </h3>
         <div class="row">
           <div class="col-md-4">
@@ -36,19 +36,7 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentRoom["apart_name"];?></label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>ที่ตั้ง</label>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="form-group">
-              <label><?php echo $currentRoom["apart_address"];?></label>
+              <label><?php echo $currentRoom["apartment"];?></label>
             </div>
           </div>
         </div>
@@ -124,6 +112,18 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>คะแนน</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["room_score"];?></label>
+            </div>
+          </div>
+        </div>
         <div align="center">
           <a href="edit_request.php?id=<?php echo $_GET["id"];?>" class="btn btn-primary" title="ส่งคำขอรูมเมท"> ส่งคำขอรูมเมท</a>
         </div>
@@ -160,7 +160,7 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
       var la = $("#lat").val();
       var ln = $("#lng").val();
       var map = new google.maps.Map(document.getElementById('map_canvas'), {
-        zoom: 12,
+        zoom: 18,
         center: new google.maps.LatLng(la, ln),
         mapTypeId: google.maps.MapTypeId.DRIVER
       });

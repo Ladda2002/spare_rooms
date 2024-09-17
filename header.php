@@ -31,7 +31,7 @@ $bed_map = array( 1=>'เตียงคู่',2=>'เตียงเดี่�
 $room_map = array( 1=>'แอร์',2=>'พัดลม');
 $room_status_map = array( 1=>'<label style="color:green">ว่าง</label>',2=>'<label style="color:red">ไม่ว่าง</label>');
 $contract_status_map = array( 1=>'<label style="color:green">เปิด</label>',2=>'<label style="color:red">ปิด</label>');
-$room_category_map = array( 1=>'<label style="color:green">จองห้อง</label>',2=>'<label style="color:red">หารูมเมท</label>');
+$room_category_map = array( 1=>'<label style="color:green">จองห้อง</label>',2=>'<label style="color:red">หารูมเมท</label>',3=>'<label style="color:blue">ซื้อขายสัญญา</label>');
 $request_map = array( 0=>'<label style="color:green">ปฏิเสธคำขอ</label>',1=>'<label style="color:blue">รอการตอบรับ</label>',2=>'<label style="color:green">ยืนยันคำขอ</label>');
 $gender_map = array( 1=>'ชาย',2=>'หญิง');
 $status_map = array( 1=>'โสด',2=>'มีแฟน');

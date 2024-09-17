@@ -66,6 +66,7 @@ if (isset($_GET['close'])) {
                     <?php }else{ ?>
                       <a href="?close=<?php echo $data['id'];?>&apartments_id=<?php echo $data['apartments_id'];?>" class="btn btn-danger btn-lg" onClick="javascript: return confirm('ยืนยันการเปลี่ยนสถานะห้อง');">ไม่ว่าง</a>
                     <?php } ?>
+                    <a href="edit_questionaire.php?id=<?php echo $data['id'];?>" class="btn btn-success btn-lg">แบบประเมิน</a>
                     <a href="edit_user_room.php?id=<?php echo $data['id'];?>" class="btn btn-warning btn-lg">แก้ไข</a>
                     <a href="?delete=<?php echo $data['id'];?>&apartments_id=<?php echo $data['apartments_id'];?>" class="btn btn-danger btn-lg" onClick="javascript: return confirm('ยืนยันการลบ');">ลบ</a>
                   </td>
