@@ -15,9 +15,6 @@ $allUserBooking = getAllUserBooking($_SESSION["id"]);
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ประวัติการจอง</h1>

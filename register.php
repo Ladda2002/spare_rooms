@@ -5,9 +5,13 @@
 require_once("header.php");
 ?>
 <?php 
+// ตรวจสอบว่ามีการกดปุ่ม submit หรือไม่
 if(isset($_POST["submit"])){
+  // ตรวจสอบอีเมลจากฐานข้อมูลโดยใช้ฟังก์ชัน getCheckEmail
   $checkEmail = getCheckEmail($_GET["email"]);
+   // หากไม่มีการใช้อีเมลนี้มาก่อน (numCount เท่ากับ 0)
   if($checkEmail["numCount"] == 0){
+    // เรียกใช้ฟังก์ชัน saveRegister เพื่อบันทึกข้อมูลการลงทะเบียนของผู้ใช้
     saveRegister($_POST["username"],$_POST["password"],$_POST["address"],$_POST["email"],$_POST["phone"],$_POST["gender"],$_POST["status"],$_POST["role"],$_FILES["profile_img"]["name"]);
   }else{
     echo '<script>alert("Email มีการใช้งานแล้วไม่สามารถสมัครได้")</script>';  
@@ -22,10 +26,7 @@ if(isset($_POST["submit"])){
   <?php
   require_once("nav.php");
   ?>
-
-
   <main class="" id="main-collapse">
-
     <div class="row">
       <div class="col-xs-12">
         <div class="section-container-spacer">
@@ -41,13 +42,13 @@ if(isset($_POST["submit"])){
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>ชื่อ-นามสกุล</label>
-                      <input type="text" class="form-control" id="username" name="username" >
+                      <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>รหัสผ่าน</label>
-                      <input type="password" class="form-control" id="password" name="password" >
+                      <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                   </div>
                 </div>
@@ -131,23 +132,30 @@ if(isset($_POST["submit"])){
   <?php
   require_once("footer.php");
   ?>
-  <script type="text/javascript">
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          $('#blah').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
+ <script type="text/javascript">
+  // ฟังก์ชัน readURL สำหรับอ่านไฟล์ที่ถูกอัปโหลดโดยผู้ใช้
+  function readURL(input) {
+    
+    // ตรวจสอบว่ามีไฟล์ถูกเลือกหรือไม่
+    if (input.files && input.files[0]) {
+      var reader = new FileReader(); 
+      
+      // เมื่ออ่านไฟล์เสร็จแล้ว ให้ทำการเปลี่ยนแปลงรูปภาพใน tag <img> โดยใช้ ID "blah"
+      reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result); 
       }
-    }
 
-    $("#imgInp").change(function() {
-      readURL(this);
-    });
-  </script>
+      // อ่านไฟล์ที่ผู้ใช้เลือกในรูปแบบ DataURL
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // เมื่อมีการเปลี่ยนแปลงใน input ที่มี ID "imgInp" (การเลือกไฟล์รูปภาพใหม่)
+  $("#imgInp").change(function() {
+    readURL(this); 
+  });
+</script>
+
 </body>
 
 </html>

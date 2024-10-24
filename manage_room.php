@@ -5,19 +5,29 @@
 require_once("header.php");
 ?>
 <?php 
+// ดึงข้อมูลห้องทั้งหมดในอพาร์ตเมนต์ 
 $allRoomInApartment = getAllRoomInApartmentt($_GET["apartments_id"],$_SESSION["id"]);
+
+// ตรวจสอบว่ามีการส่งคำขอเพื่อลบห้องมาหรือไม่
 if (isset($_GET['delete'])) {
+  // ถ้ามีการส่งค่าให้ลบห้อง จะเรียกใช้ฟังก์ชัน deleteRoom 
   deleteRoom($_GET['delete'],$_GET['apartments_id']);
 }
 
+// ตรวจสอบว่ามีการส่งคำขอเพื่อเปิดห้องมาหรือไม่
 if (isset($_GET['open'])) {
+  // ถ้ามีการส่งค่าให้เปิดห้อง จะเรียกใช้ฟังก์ชัน openRoom 
   openRoom($_GET['open'],$_GET['apartments_id']);
 }
+
+// ตรวจสอบว่ามีการส่งคำขอเพื่อปิดห้องมาหรือไม่
 if (isset($_GET['close'])) {
+  // ถ้ามีการส่งค่าให้ปิดห้อง จะเรียกใช้ฟังก์ชัน closeRoom 
   closeRoom($_GET['close'],$_GET['apartments_id']);
 }
 
 ?>
+
 <body>
 
   <?php
@@ -26,9 +36,6 @@ if (isset($_GET['close'])) {
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ข้อมูลห้องพัก</h1>
@@ -38,6 +45,7 @@ if (isset($_GET['close'])) {
         <table class="table">
           <thead>
             <tr>
+              <td>ชื่อหอ</td>
               <td>ชื่อห้อง</td>
               <td>ประเภทเตียง</td>
               <td>ประเภทห้อง</td>
@@ -53,6 +61,7 @@ if (isset($_GET['close'])) {
               <?php $i=1;?>
               <?php foreach($allRoomInApartment as $data){ ?>
                 <tr>
+                  <td><?php echo $data["apart_name"];?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $bed_map[$data["bed_type"]];?></td>
                   <td><?php echo $room_map[$data["room_type"]];?></td>

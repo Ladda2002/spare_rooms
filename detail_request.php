@@ -5,13 +5,19 @@
 require_once("header.php");
 ?>
 <?php 
+// ดึงข้อมูลคำขอปัจจุบันจากฟังก์ชัน getCurrentRequest 
 $currentRequest = getCurrentRequest($_GET["id"]);
+
+// ดึงข้อมูลผลการประเมินจากฟังก์ชัน getCurrentQuestionaireFindding 
 $currentQuestionaireFindding = getCurrentQuestionaireFindding($currentRequest["qusers_id"]);
 
+// ตรวจสอบว่ามีการส่งข้อมูลแบบ POST หรือไม่
 if(isset($_POST["submit"])){
-  updateRequest($_POST["requests_id"],$_POST["request_status"]);
+  // หากมีการส่งข้อมูล จะเรียกใช้ฟังก์ชัน updateRequest เพื่ออัปเดตสถานะคำขอ
+  updateRequest($_POST["requests_id"], $_POST["request_status"]);
 }
 ?>
+
 <body>
 
   <?php
@@ -38,7 +44,9 @@ if(isset($_POST["submit"])){
                 </div>
                 <div class="col-md-8">
                   <div class="form-group">
-                    <label><?php echo $currentRequest["apart_name"];?></label>
+                    <label>
+                      <?php echo $currentRequest["apartment"] . "  " . $currentRequest["apart_name"]; ?>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -223,8 +231,8 @@ if(isset($_POST["submit"])){
           <div class="form-group">
             <select name="request_status" class="form-control" required>
               <option value="">-- โปรดระบุสถานะ --</option>
-              <option value="0" >ปฏิเสธคำขอ</option>
-              <option value="2" >ยืนยันคำขอ</option>
+              <option value="0" <?php if($currentRequest['request_status'] == 0){ ?> selected<?php } ?>>ปฏิเสธคำขอ</option>
+              <option value="2" <?php if($currentRequest['request_status'] == 2){ ?> selected<?php } ?>>ยืนยันคำขอ</option>
             </select>
           </div>
         </div>

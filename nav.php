@@ -4,6 +4,7 @@ $user = getUser($_SESSION["id"]);
 $checkNewPending = getCheckNewPending($_SESSION["id"]);
 $checkNewRequest = getCheckNewRequest($_SESSION["id"]);
 $checkNewRequestBuy = getCheckNewRequestBuy($_SESSION["id"]);
+
 if (isset($_GET['logout'])) {
   logout();
 }
@@ -63,7 +64,7 @@ if (isset($_GET['logout'])) {
             <li><a href="manage_user.php?role=5" title="ข้อมูลผู้หาห้องเช่า">ข้อมูลผู้หาห้องเช่า</a></li>
             <li><a href="history_all_booking.php" title="ข้อมูลการจอง">ข้อมูลการจอง</a></li>
             <li><a href="report_booking.php" title="รายงานการจอง">รายงานการจอง</a></li>
-            <li><a href="report_roommate.php" title="รายงานการจับคู่">รายงานการจับคู่</a></li>
+            <li><a href="pdf_roommate.php" title="รายงานการจับคู่" target="_blank">รายงานการจับคู่</a></li>
             <li><a href="report_contract.php" title="รายงานการขายสัญญาเช่า">รายงานการขายสัญญาเช่า</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
@@ -72,7 +73,9 @@ if (isset($_GET['logout'])) {
             <li><a href="index.php" title="หน้าหลัก">หน้าหลัก</a></li>
             <li><a href="manage_apartment.php" title="จัดการหอพัก">จัดการหอพัก</a></li>
             <li><a href="manage_pending.php" title="ตรวจสอบการจอง">ตรวจสอบการจอง <?php if($checkNewPending["numBook"] != 0){ ?><span class="badge"><?php echo $checkNewPending["numBook"];?></span><?php } ?></a> </li>
-            <li><a href="history_booking_apartment.php" title="จัดการหอพัก">ประวัติการจอง</a></li>
+            <li><a href="history_booking_apartment.php" title="ประวัติการจอง">ประวัติการจอง</a></li>
+            <li><a href="report_statistic.php" title="ดูรายงานการจอง">ดูรายงานการจอง</a></li>
+            <li><a href="report_booking_owner.php" title="พิมพ์รายงานการจอง">พิมพ์รายงานการจอง</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
           <?php } ?>
@@ -80,13 +83,17 @@ if (isset($_GET['logout'])) {
             <li><a href="index.php" title="หน้าหลัก">หน้าหลัก</a></li>
             <li><a href="manage_contract.php" title="จัดการห้องพัก">จัดการห้องพัก</a></li>
             <li><a href="manage_request_contract.php" title="ตรวจสอบคำขอ">ตรวจสอบคำขอ<?php if($checkNewRequestBuy["numBuy"] != 0){ ?><span class="badge"><?php echo $checkNewRequestBuy["numBuy"];?></span><?php } ?></a></li>
+            <li><a href="history_contract.php" title="ประวัติการขายสัญญา">ประวัติการขายสัญญา</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
+            
+
           <?php } ?>
           <?php if($_SESSION['role'] == 4){ ?>
             <li><a href="index.php" title="หน้าหลัก">หน้าหลัก</a></li>
             <li><a href="manage_user_room.php" title="จัดการห้องพัก">จัดการห้องพัก</a></li>
             <li><a href="manage_request_roommate.php" title="ตรวจสอบคำขอ">ตรวจสอบคำขอ<?php if($checkNewRequest["numReq"] != 0){ ?><span class="badge"><?php echo $checkNewRequest["numReq"];?></span><?php } ?></a></li>
+            <li><a href="history_request_roommate.php" title="ประวัติคำขอ">ประวัติคำขอ</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>
           <?php } ?>
@@ -97,7 +104,7 @@ if (isset($_GET['logout'])) {
             <li><a href="all_contract.php" title="ค้นหาสัญญาเช่า">ค้นหาสัญญาเช่า</a></li>
             <li><a href="history_booking.php" title="ประวัติการจอง">ประวัติการจอง</a></li>
             <li><a href="history_request.php" title="ประวัติคำขอ">ประวัติคำขอ</a></li>
-            <li><a href="history_contract.php" title="ประวัติการซื้อสัญญา">ประวัติการซื้อสัญญา</a></li>
+            <li><a href="history_contract_finding.php" title="ประวัติการซื้อสัญญา">ประวัติการซื้อสัญญา</a></li>
             <li><a href="edit_question_finding.php" title="ทำแบบประเมิน">ทำแบบประเมิน</a></li>
             <li><a href="profile.php" title="ข้อมูลส่วนตัว">ข้อมูลส่วนตัว</a></li>
             <li><a href="?logout=true" title="ออกจากระบบ">ออกจากระบบ</a></li>

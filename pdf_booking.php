@@ -1,73 +1,80 @@
 ﻿<?php
 
-require_once('assets/tcpdf/tcpdf.php');
-session_start();
-require("function/function.php");
+require_once('assets/tcpdf/tcpdf.php'); 
+session_start(); 
+require("function/function.php"); 
 
-$start_date = $_POST["start_date"];
-$end_date = $_POST["end_date"];
+$start_date = $_POST["start_date"]; 
+$end_date = $_POST["end_date"]; 
 
 $reportBooking = getReportBooking($start_date,$end_date);
-$booking_map = array( 0=>'<label style="color:red">ยกเลิก</label>',1=>'<label style="color:blue">รอยืนยัน</label>',2=>'<label style="color:green">ยืนยัน</label>');
+$booking_map = array( 0=>'<label style="color:red">ยกเลิก</label>', 1=>'<label style="color:blue">รอยืนยัน</label>', 2=>'<label style="color:green">ยืนยัน</label>'); 
 
-$yThai = date("Y")+543;
+$yThai = date("Y")+543; 
 $dateNow = date("d/m/").$yThai;
 
-// create new PDF document
+// สร้างเอกสาร PDF ใหม่
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-// set document information
+// กำหนดข้อมูลเอกสาร
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Nicola Asuni');
-$pdf->SetTitle('Spare Room');
-$pdf->SetSubject('TCPDF Tutorial');
-$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+$pdf->SetAuthor('Nicola Asuni'); 
+$pdf->SetTitle('Spare Room'); 
+$pdf->SetSubject('TCPDF Tutorial'); 
+$pdf->SetKeywords('TCPDF, PDF, example, test, guide'); 
 
-// remove default header/footer
+// ลบ header และ footer เริ่มต้น
 $pdf->setPrintHeader(false);
 $pdf->setPrintFooter(false);
 
-// set default monospaced font
+// ตั้งค่าฟอนต์ monospaced
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
-//set margins
+// ตั้งค่าระยะขอบ
 $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_RIGHT);
 
-//set auto page breaks
+// ตั้งค่าการแบ่งหน้าอัตโนมัติ
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 
-//set image scale factor
+// ตั้งค่าอัตราส่วนการปรับขนาดรูปภาพ
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
-//set some language-dependent strings
+// ตั้งค่าภาษา
 $pdf->setLanguageArray($l);
 
 // ---------------------------------------------------------
-// set font
-
+// ตั้งค่าฟอนต์
 //$fontname = $pdf->addTTFfont('fonts/Browa.ttf', 'TrueTypeUnicode', '', 32);
-$pdf->SetFont('cordiaupc', '', 12, '', true);
-
+$pdf->SetFont('cordiaupc', '', 12, '', true); 
 
 $line_html="";
-//PAGE 3 >> PAGE 1
+// สร้างหน้าใหม่
 $pdf->AddPage();
-$pdf->setPageOrientation ('L', $autopagebreak='', $bottommargin='');
-// get the current page break margin
+// กำหนดให้หน้าเป็นแนวนอน
+$pdf->setPageOrientation ('L', $autopagebreak='', $bottommargin=''); 
+// รับค่า margin ของการแบ่งหน้าปัจจุบัน
 $bMargin = $pdf->getBreakMargin();
-// get current auto-page-break mode
-$auto_page_break = $pdf->getAutoPageBreak();
-// disable auto-page-break
+// ปิดการแบ่งหน้าอัตโนมัติ
 $pdf->SetAutoPageBreak(true, 0);
-// Set some content to print
 
-$total_price = 0;
-$total_weight = 0;
+// ตัวแปรรวมนับจำนวนแถว
+$a = 0;
 
+$x = 0;
+$y = 0;
+$z = 0;
+// วนลูปเพิ่มข้อมูลในแต่ละแถว
 foreach($reportBooking as $data){
-    $a++;
+    $a++; // ลำดับ
     $cDate = formatDateFull($data["booking_date"]);
-    $cStat = $booking_map[$data["booking_status"]];
+    $cStat = $booking_map[$data["booking_status"]]; 
+    if($data["booking_status"] == 0){
+        $x++;
+    }else if($data["booking_status"] == 1){
+        $y++;
+    }else{
+        $z++;
+    }
 $line_html  .= <<<EOD
                 <tr>
                     <td align="center" style="border-right-width:0.1px;">{$a}</td>
@@ -82,14 +89,15 @@ $line_html  .= <<<EOD
 EOD;
 }
 
+// สร้างส่วนหัวของรายงาน
 $header_html  .= <<<EOD
-<div style="text-align:center;margin:0;"><b style="font-size:20px;">รายงานการจอง</b></div>
+<div style="text-align:center;margin:0;"><b style="font-size:30px;">รายงานการจอง</b></div>
 <div style="text-align:center;margin:0;">
 <b style="font-size:20px;">วันที่ {$start_date} ถึง {$end_date}</b>
 </div>
 EOD;
 
-
+// สร้างตารางเนื้อหาของรายงาน
 $body_html  .= <<<EOD
 <table style="width:100%;" border="1">
     <tr>
@@ -104,28 +112,34 @@ $body_html  .= <<<EOD
     </tr>
     {$line_html}
 </table>
-<div align="right">
-    รวม {$a} รายงาน
+
+<div align="right" >
+    <label style="color:red">รวมยกเลิก {$x} รายการ</label><br/>
+    <label style="color:blue">รวมรอยืนยัน {$y} รายการ</label><br/>
+    <label style="color:green">รวมยืนยัน {$z} รายการ</label>
 </div>
+
+<div align="right">
+    รวมทั้งหมด {$a} รายการ
+</div
 EOD;
 
-
+// รวมส่วนหัวและเนื้อหาในเอกสาร
 $html = <<<EOD
 {$header_html}
 {$body_html}
-
 EOD;
 
-
-// Print text using writeHTMLCell()
+// พิมพ์ข้อมูลในเอกสาร PDF
 $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
 // ---------------------------------------------------------
 
-// Close and output PDF document
-// This method has several options, check the source code documentation for more information.
-ob_end_clean();
-$pdf->Output('รายงาน.pdf', 'I');
+// ปิดและแสดงไฟล์ PDF
+ob_end_clean(); // ล้าง buffer ก่อนแสดงผล
+$pdf->Output('รายงาน.pdf', 'I'); // แสดงไฟล์ PDF ในเบราว์เซอร์
+
 ?>
 
-<?php die(); ?>
+<?php die(); 
+?>

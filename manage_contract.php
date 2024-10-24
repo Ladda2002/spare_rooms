@@ -5,20 +5,25 @@
 require_once("header.php");
 ?>
 <?php 
+// ดึงข้อมูลห้องเช่าทั้งหมดที่ผู้ใช้มี โดยใช้ฟังก์ชัน getAllRentalRoom 
 $allRentalRoom = getAllRentalRoom($_SESSION["id"]);
+
+// ตรวจสอบว่ามีการส่งค่า delete มาหรือไม่ ถ้ามีให้เรียกฟังก์ชัน deleteContract เพื่อลบข้อมูลห้องเช่า
 if (isset($_GET['delete'])) {
   deleteContract($_GET['delete']);
 }
 
+// ตรวจสอบว่ามีการส่งค่า open มาหรือไม่ ถ้ามีให้เรียกฟังก์ชัน openContract เพื่อเปิดสัญญาหรือห้องเช่า
 if (isset($_GET['open'])) {
   openContract($_GET['open']);
 }
+
+// ตรวจสอบว่ามีการส่งค่า close มาหรือไม่ ถ้ามีให้เรียกฟังก์ชัน closeContract เพื่อปิดสัญญาหรือห้องเช่า
 if (isset($_GET['close'])) {
   closeContract($_GET['close']);
 }
-
-
 ?>
+
 <body>
 
   <?php
@@ -27,8 +32,6 @@ if (isset($_GET['close'])) {
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
 
     <div class="hero-full-wrapper">
       <div class="grid">
@@ -39,6 +42,7 @@ if (isset($_GET['close'])) {
         <table class="table">
           <thead>
             <tr>
+              <td>ชื่อหอ</td>
               <td>ชื่อห้อง</td>
               <td>ประเภทเตียง</td>
               <td>ประเภทห้อง</td>
@@ -54,6 +58,7 @@ if (isset($_GET['close'])) {
               <?php $i=1;?>
               <?php foreach($allRentalRoom as $data){ ?>
                 <tr>
+                  <td><?php echo $data["apartment"] . "  " . $data["apart_name"]; ?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $bed_map[$data["bed_type"]];?></td>
                   <td><?php echo $room_map[$data["room_type"]];?></td>

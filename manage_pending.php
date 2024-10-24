@@ -15,9 +15,6 @@ $allUserBookingPendingStatus = getAllUserBookingPendingStatus($_SESSION["id"]);
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ตรวจสอบการจอง</h1>
@@ -29,8 +26,8 @@ $allUserBookingPendingStatus = getAllUserBookingPendingStatus($_SESSION["id"]);
               <td>อีเมล</td>
               <td>ชื่อหอพัก</td>
               <td>ห้อง</td>
-              <td>สถานะ</td>
               <td>วันที่</td>
+              <td>สถานะ</td>
               <td></td>
             </tr>
           </thead>

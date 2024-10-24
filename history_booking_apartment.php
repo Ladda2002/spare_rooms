@@ -5,6 +5,7 @@
 require_once("header.php");
 ?>
 <?php 
+// เรียกใช้งานฟังก์ชัน getAllUserBookingApartment เพื่อดึงข้อมูลการจองทั้งหมดของผู้ใช้ที่เข้าสู่ระบบ
 $allUserBookingApartment = getAllUserBookingApartment($_SESSION["id"]);
 ?>
 <body>
@@ -12,12 +13,7 @@ $allUserBookingApartment = getAllUserBookingApartment($_SESSION["id"]);
   <?php
   require_once("nav.php");
   ?>
-
-
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ประวัติการจอง</h1>

@@ -5,15 +5,31 @@
 require_once("header.php");
 ?>
 <?php 
+// เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลห้องปัจจุบันตาม id ที่ส่งมาใน URL
 $currentRoom = getCurrentRoom($_GET["id"]);
+
+// เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลแบบสอบถามปัจจุบันตาม id ที่ส่งมาใน URL
 $currentQuestionaire = getCurrentQuestionaire($_GET["id"]);
 
-if(isset($_POST["submit"])){
-  saveQuestionaires($_POST["rooms_id"],$_POST["q1"],$_POST["q2"],$_POST["q3"],$_POST["q4"],$_POST["q5"],$_POST["q6"],$_POST["q7"],$_POST["q8"],$_POST["q9"],$_POST["q10"]);
-  
-} 
-
+// ตรวจสอบว่ามีการส่งข้อมูลฟอร์มมาหรือไม่
+if (isset($_POST["submit"])) {
+    // ถ้ามีการส่งฟอร์ม ให้เรียกใช้ฟังก์ชัน saveQuestionaires เพื่อบันทึกข้อมูล
+    saveQuestionaires(
+        $_POST["rooms_id"],
+        $_POST["q1"],
+        $_POST["q2"],
+        $_POST["q3"],
+        $_POST["q4"],
+        $_POST["q5"],
+        $_POST["q6"],
+        $_POST["q7"],
+        $_POST["q8"],
+        $_POST["q9"],
+        $_POST["q10"]
+    );
+}
 ?>
+
 <body>
 
   <?php
@@ -208,7 +224,7 @@ if(isset($_POST["submit"])){
               </tr>
             </tbody>
           </table>
-          <button type="submit" name="submit" class="btn btn-success btn-lg">ส่งคำขอ</button>
+          <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
         </div>
       </form>
     </div>

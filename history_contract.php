@@ -16,8 +16,6 @@ $allUserBuyContract = getAllUserBuyContract($_SESSION["id"]);
 
   <main class="" id="main-collapse">
 
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ประวัติการซื้อสัญญา</h1>

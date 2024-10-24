@@ -5,10 +5,10 @@
 require_once("header.php");
 ?>
 <?php 
+//ฟังก์ชัน getAllRoomInApartmentOpen() 
 $allRoomInApartment = getAllRoomInApartmentOpen($_GET["apartments_id"]);
 ?>
 <body>
-
   <?php
   require_once("nav.php");
   ?>

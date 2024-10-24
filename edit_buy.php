@@ -31,6 +31,32 @@ if(isset($_POST["submit"])){
       <div class="col-xs-12 col-md-6">
         <h1>ห้อง <?php echo $currentRoom["room_name"];?></h1>
         <h3>ข้อมูลห้องพัก </h3>
+      <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>ผู้ขายสัญญาเช่า</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["username"];?></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>หอพัก</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>
+                <?php echo $currentRoom["apartment"] . "  " . $currentRoom["apart_name"]; ?>
+              </label>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -94,12 +120,36 @@ if(isset($_POST["submit"])){
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>เจ้าของสัญญา</label>
+              <label>ระยะเวลาสัญญา</label>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentUserContract["username"];?></label>
+              <label><?php echo $currentRoom["contract_year"];?> ปี</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>วันที่สิ้นสุดสัญญา</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["contract_end"];?></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>ดาวน์โหลดไฟล์สัญญา</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <a href="images/contract/<?php echo $currentRoom["contract_file"];?>" target="_blank">ดูสัญญา</a>
             </div>
           </div>
         </div>

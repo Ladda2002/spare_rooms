@@ -6,14 +6,25 @@ require_once("header.php");
 ?>
 <?php 
 
+// รับข้อมูลการซื้อปัจจุบันจาก ID ที่ส่งมาใน URL
 $currentBuy = getCurrentBuy($_GET["id"]);
+
+// รับข้อมูลผู้ใช้จากรหัสผู้ใช้ที่อยู่ในข้อมูลการซื้อ
 $currentUser = getCurrentUser($currentBuy["rusers_id"]);
+
+// รับข้อมูลห้องจากรหัสห้องที่อยู่ในข้อมูลการซื้อ
 $currentRoom = getCurrentRoom($currentBuy["rooms_id"]);
+
+// รับข้อมูลแกลลอรีของห้องที่อยู่ในข้อมูลการซื้อ
 $allRoomGallery = getAllRoomGallery($currentBuy["rooms_id"]);
-if(isset($_POST["submit"])){
-  updateBuyStatus($_POST["buy_id"],$_POST["buy_status"]);
+
+// ตรวจสอบว่ามีการส่งฟอร์มที่มีชื่อ submit หรือไม่
+if (isset($_POST["submit"])) {
+    // อัปเดตสถานะการซื้อโดยเรียกใช้ฟังก์ชัน updateBuyStatus
+    updateBuyStatus($_POST["buy_id"], $_POST["buy_status"]);
 }
 ?>
+
 <body>
 
   <?php
@@ -22,8 +33,6 @@ if(isset($_POST["submit"])){
 
 
   <main class="" id="main-collapse">
-
-
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <img class="img-responsive" alt="" src="images/room/<?php echo $currentRoom["room_image"];?>">

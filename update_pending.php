@@ -6,14 +6,22 @@ require_once("header.php");
 ?>
 <?php 
 
+// ดึงข้อมูลการจองปัจจุบันตาม ID ที่ส่งมาใน URL
 $currentBooking = getCurrentBooking($_GET["id"]);
-$currentRoom = getCurrentRoom($currentBooking["rooms_id"]);
-$allRoomGallery = getAllRoomGallery($currentBooking["rooms_id"]);
-if(isset($_POST["submit"])){
 
+// ดึงข้อมูลห้องที่เกี่ยวข้องกับการจองนั้น
+$currentRoom = getCurrentRoom($currentBooking["rooms_id"]);
+
+// ดึงข้อมูลแกลเลอรีของห้องที่เกี่ยวข้องกับการจอง
+$allRoomGallery = getAllRoomGallery($currentBooking["rooms_id"]);
+
+// ตรวจสอบว่ามีการส่งข้อมูลแบบ POST มาหรือไม่ 
+if(isset($_POST["submit"])){
+  // อัปเดตสถานะการจองโดยเรียกใช้ฟังก์ชัน updateBookingStatus
   updateBookingStatus($_POST["booking_id"],$_POST["booking_status"]);
 }
 ?>
+
 <body>
 
   <?php
@@ -22,8 +30,6 @@ if(isset($_POST["submit"])){
 
 
   <main class="" id="main-collapse">
-
-
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <img class="img-responsive" alt="" src="images/room/<?php echo $currentRoom["room_image"];?>">

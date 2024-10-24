@@ -5,25 +5,37 @@
 require_once("header.php");
 ?>
 <?php 
+// เรียกข้อมูลห้องปัจจุบันจากฟังก์ชัน getCurrentRoom() 
 $currentRoom = getCurrentRoom($_GET["id"]);
+
+// ตรวจสอบว่ามีการส่งฟอร์มหรือไม่ โดยเช็คว่ามีการกดปุ่ม submit
 if(isset($_POST["submit"])){
+  // ถ้าค่า id ว่างเปล่า แสดงว่าเป็นการเพิ่มห้องใหม่
   if($_POST["id"] == ""){
+    // เก็บชื่อไฟล์รูปภาพแกลเลอรี่ลงในตัวแปร $room_gallery
     $room_gallery = $_FILES['room_gallery']['name'];
+    // นับจำนวนรูปภาพแกลเลอรี่ทั้งหมดแล้วเก็บในตัวแปร $total
     $total = count($_FILES['room_gallery']['name']);
+    // เรียกฟังก์ชัน saveRoom() เพื่อบันทึกข้อมูลห้องใหม่
     saveRoom($_POST["apartments_id"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"]);
   }else{
+    // ถ้า id มีค่า แสดงว่าเป็นการแก้ไขข้อมูลห้องที่มีอยู่แล้ว
     $room_gallery = $_FILES['room_gallery']['name'];
     $total = count($_FILES['room_gallery']['name']);
+    // เรียกฟังก์ชัน editRoom() เพื่อแก้ไขข้อมูลห้อง
     editRoom($_POST["id"],$_POST["apartments_id"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"]);
   }
 }
 
+// ถ้าไม่มีค่า id แสดงว่าเป็นการเพิ่มหอพัก
 if($_GET["id"] == ""){
   $txtHead = "เพิ่ม ห้องพัก";
 }else{
+   // ถ้ามีค่า id แสดงว่าเป็นการแก้ไขหอพัก
   $txtHead = "แก้ไข ห้องพัก";
 }
 ?>
+
 <body>
 
   <?php
@@ -114,8 +126,6 @@ if($_GET["id"] == ""){
                     </div>
                   </div>
                 </div>
-                
-
                 <div align="right">
                   <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
                 </div>

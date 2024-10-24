@@ -5,6 +5,7 @@
 require_once("header.php");
 ?>
 <?php 
+//เรียกฟังก์ชัน getAllUserRequestContract 
 $allUserRequest = getAllUserRequestContract($_SESSION["id"]);
 ?>
 <body>
@@ -15,9 +16,6 @@ $allUserRequest = getAllUserRequestContract($_SESSION["id"]);
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ตรวจสอบคำขอ</h1>
@@ -44,7 +42,7 @@ $allUserRequest = getAllUserRequestContract($_SESSION["id"]);
                   <td><?php echo $data["buy_name"];?></td>
                   <td><?php echo $data["buy_phone"];?></td>
                   <td><?php echo $data["buy_email"];?></td>
-                  <td><?php echo $data["apart_name"];?></td>
+                  <td><?php echo $data["apartment"];?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $buy_map[$data["buy_status"]];?></td>
                   <td style="text-align: right;">

@@ -5,20 +5,28 @@
 require_once("header.php");
 ?>
 <?php 
+// ดึงข้อมูลห้องเช่าทั้งหมดสำหรับผู้ใช้ที่ล็อกอินอยู่
 $allRentalRoom = getAllRentalRoom($_SESSION["id"]);
+
+// ตรวจสอบว่ามีการส่งค่าจาก URL เพื่อทำการลบห้องเช่าหรือไม่
 if (isset($_GET['delete'])) {
+  // เรียกฟังก์ชันเพื่อลบการเช่าห้องตาม ID ที่ส่งมา
   deleteRoomRental($_GET['delete'],$_GET['apartments_id']);
 }
 
+// ตรวจสอบว่ามีการส่งค่าจาก URL เพื่อเปิดห้องเช่าหรือไม่
 if (isset($_GET['open'])) {
+  // เรียกฟังก์ชันเพื่อเปิดห้องเช่าตาม ID ที่ส่งมา
   openRoomRental($_GET['open']);
 }
+
+// ตรวจสอบว่ามีการส่งค่าจาก URL เพื่อปิดห้องเช่าหรือไม่
 if (isset($_GET['close'])) {
+  // เรียกฟังก์ชันเพื่อปิดห้องเช่าตาม ID ที่ส่งมา
   closeRoomRental($_GET['close']);
 }
-
-
 ?>
+
 <body>
 
   <?php
@@ -27,9 +35,6 @@ if (isset($_GET['close'])) {
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ข้อมูลห้องพัก</h1>
@@ -39,6 +44,7 @@ if (isset($_GET['close'])) {
         <table class="table">
           <thead>
             <tr>
+              <td>ชื่อหอพัก</td>
               <td>ชื่อห้อง</td>
               <td>ประเภทเตียง</td>
               <td>ประเภทห้อง</td>
@@ -54,6 +60,7 @@ if (isset($_GET['close'])) {
               <?php $i=1;?>
               <?php foreach($allRentalRoom as $data){ ?>
                 <tr>
+                  <td><?php echo $data["apartment"] . "  " . $data["apart_name"]; ?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $bed_map[$data["bed_type"]];?></td>
                   <td><?php echo $room_map[$data["room_type"]];?></td>

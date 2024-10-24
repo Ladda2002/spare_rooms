@@ -6,18 +6,23 @@ require_once("header.php");
 ?>
 <?php 
 
+// เรียกใช้ฟังก์ชันเพื่อตรวจสอบจำนวนคำถามที่ผู้ใช้ทำ
 $checkQuestionaireFindding = getCheckQuestionaireFindding($_SESSION["id"]);
-if($checkQuestionaireFindding["numCount"] == 0){
-  echo ("<script language='JavaScript'>
-    alert('คุณต้องทำแบบประเมินก่อน เพื่อทำการค้นหาห้อง');
-    window.location.href='edit_question_finding.php';
-    </script>");  
 
-}else{
-  $allRoommate = getAllRoommateFindding($_SESSION["id"]);
+// ตรวจสอบว่าผู้ใช้ยังไม่ได้ทำแบบประเมินหรือไม่
+if ($checkQuestionaireFindding["numCount"] == 0) {
+    // แสดงข้อความแจ้งเตือนว่าให้ทำแบบประเมินก่อน
+    echo ("<script language='JavaScript'>
+        alert('คุณต้องทำแบบประเมินก่อน เพื่อทำการค้นหาห้อง');
+        window.location.href='edit_question_finding.php';
+    </script>");  
+} else {
+    // หากผู้ใช้ทำแบบประเมินแล้ว ให้เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลห้องแชร์
+    $allRoommate = getAllRoommateFindding($_SESSION["id"]);
 }
 
 ?>
+
 <body>
 
   <?php

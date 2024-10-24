@@ -6,25 +6,56 @@ require_once("header.php");
 ?>
 <?php 
 $currentApartment = getCurrentApartment($_GET["id"]);
+
+// ตรวจสอบว่ามีการกดปุ่ม submit หรือไม่
 if(isset($_POST["submit"])){
+  // ถ้าค่า id เป็นค่าว่าง แสดงว่าเป็นการเพิ่มข้อมูลใหม่
   if($_POST["id"] == ""){
-    saveApartment($_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],$_POST["apart_number"],
-      $_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],$_POST["apart_detail"],
-      $_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],$_POST["apart_lng"]);
+    // เรียกใช้ฟังก์ชัน saveApartment เพื่อเพิ่มข้อมูลหอพักใหม่
+    saveApartment(
+      $_POST["users_id"],
+      $_POST["apart_name"],
+      $_POST["apart_type"],
+      $_POST["apart_number"],
+      $_POST["apart_class"],
+      $_POST["apart_elevator"],
+      $_POST["apart_address"],
+      $_POST["apart_detail"],
+      $_FILES["apart_image"]["name"],
+      $_FILES["apart_contract"]["name"],
+      $_POST["apart_lat"],
+      $_POST["apart_lng"]
+    );
   }else{
-    editApartment($_POST["id"],$_POST["users_id"],$_POST["apart_name"],$_POST["apart_type"],
-      $_POST["apart_number"],$_POST["apart_class"],$_POST["apart_elevator"],$_POST["apart_address"],
-      $_POST["apart_detail"],$_FILES["apart_image"]["name"],$_FILES["apart_contract"]["name"],$_POST["apart_lat"],
-      $_POST["apart_lng"]);
+    // ถ้า id ไม่เป็นค่าว่าง แสดงว่าเป็นการแก้ไขข้อมูล
+    // เรียกใช้ฟังก์ชัน editApartment เพื่อแก้ไขข้อมูลหอพัก
+    editApartment(
+      $_POST["id"],
+      $_POST["users_id"],
+      $_POST["apart_name"],
+      $_POST["apart_type"],
+      $_POST["apart_number"],
+      $_POST["apart_class"],
+      $_POST["apart_elevator"],
+      $_POST["apart_address"],
+      $_POST["apart_detail"],
+      $_FILES["apart_image"]["name"],
+      $_FILES["apart_contract"]["name"],
+      $_POST["apart_lat"],
+      $_POST["apart_lng"]
+    );
   }
 }
 
+// ถ้าไม่มีค่า id แสดงว่าเป็นการเพิ่มหอพัก
 if($_GET["id"] == ""){
   $txtHead = "เพิ่ม หอพัก";
 }else{
+  // ถ้ามีค่า id แสดงว่าเป็นการแก้ไขหอพัก
   $txtHead = "แก้ไข หอพัก";
 }
 ?>
+
 <body onload="initialize();">
 
   <?php
@@ -67,12 +98,12 @@ if($_GET["id"] == ""){
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-4">
+<!--                   <div class="col-md-4">
                     <div class="form-group">
                       <label>จำนวนห้อง</label>
                       <input type="text" class="form-control" id="apart_number" name="apart_number" value="<?php echo $currentApartment["apart_number"];?>">
                     </div>
-                  </div>
+                  </div> -->
                   <div class="col-md-4">
                     <div class="form-group">
                       <label>จำนวนชั้น</label>
@@ -127,94 +158,92 @@ if($_GET["id"] == ""){
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>ละติจูด</label>
-                      <input type="text" class="form-control" id="lat" name="apart_lat" value="<?php if($_GET['id'] == ""){ echo "16.2439983";} echo $currentApartment["apart_lat"];?>">
+                <div align="right">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>ละติจูด</label>
+                        <input type="text" class="form-control" id="lat" name="apart_lat" value="<?php if($_GET['id'] == ""){ echo "16.2439983";} echo $currentApartment["apart_lat"];?>">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>ลองติจูด</label>
+                        <input type="text" class="form-control" id="lng" name="apart_lng" value="<?php if($_GET['id'] == ""){ echo "103.246472";} echo $currentApartment["apart_lng"];?>">
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label>ลองติจูด</label>
-                      <input type="text" class="form-control" id="lng" name="apart_lng" value="<?php if($_GET['id'] == ""){ echo "103.246472";} echo $currentApartment["apart_lng"];?>">
-                    </div>
+                    <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
                   </div>
                 </div>
-                <div align="right" style="margin-top: 20px;">
-                  <button type="submit" name="submit" class="btn btn-success btn-lg">บันทึก</button>
+                <div class="col-md-6" >
+                  <div class="col-xs-12 col-md-12 section-container-spacer" align="center">
+                    <?php if($currentApartment["apart_image"] == ""){ ?>
+                      <img class="img-responsive" alt="" src="images/user_ico.png" id="blah">
+                    <?php }else{ ?>
+                      <img class="img-responsive" alt="" src="images/apartment/<?php echo $currentApartment["apart_image"];?>" id="blah">
+                    <?php } ?>
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6" >
-                <div class="col-xs-12 col-md-12 section-container-spacer" align="center">
-                  <?php if($currentApartment["apart_image"] == ""){ ?>
-                    <img class="img-responsive" alt="" src="images/user_ico.png" id="blah">
-                  <?php }else{ ?>
-                    <img class="img-responsive" alt="" src="images/apartment/<?php echo $currentApartment["apart_image"];?>" id="blah">
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
 
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
 
-  </main>
-  <?php
-  require_once("footer.php");
-  ?>
-  <script type="text/javascript">
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
+    </main>
+    <?php
+    require_once("footer.php");
+    ?>
+    <script type="text/javascript">
+      function readURL(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
 
-        reader.onload = function(e) {
-          $('#blah').attr('src', e.target.result);
+          reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
+          }
+
+          reader.readAsDataURL(input.files[0]);
         }
-
-        reader.readAsDataURL(input.files[0]);
       }
-    }
 
-    $("#imgInp").change(function() {
-      readURL(this);
-    });
-  </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
-  <script type="text/javascript">
-    function initialize() {
-
-      var la = $("#lat").val();
-      var ln = $("#lng").val();
-      var map = new google.maps.Map(document.getElementById('map_canvas'), {
-        zoom: 12,
-        center: new google.maps.LatLng(la, ln),
-        mapTypeId: google.maps.MapTypeId.DRIVER
+      $("#imgInp").change(function() {
+        readURL(this);
       });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
+    <script type="text/javascript">
+      function initialize() {
 
-      var vMarker = new google.maps.Marker({
-        position: new google.maps.LatLng(la, ln),
-        draggable: true
-      });
+        var la = $("#lat").val();
+        var ln = $("#lng").val();
+        var map = new google.maps.Map(document.getElementById('map_canvas'), {
+          zoom: 12,
+          center: new google.maps.LatLng(la, ln),
+          mapTypeId: google.maps.MapTypeId.DRIVER
+        });
 
-      google.maps.event.addListener(vMarker, 'dragend', function (evt) {
-        $("#lat").val(evt.latLng.lat().toFixed(6));
-        $("#lng").val(evt.latLng.lng().toFixed(6));
+        var vMarker = new google.maps.Marker({
+          position: new google.maps.LatLng(la, ln),
+          draggable: true
+        });
+
+        google.maps.event.addListener(vMarker, 'dragend', function (evt) {
+          $("#lat").val(evt.latLng.lat().toFixed(6));
+          $("#lng").val(evt.latLng.lng().toFixed(6));
 
 
-        var p1 = new google.maps.LatLng(la, ln);
-        var p2 = new google.maps.LatLng(evt.latLng.lat(), evt.latLng.lng());
+          var p1 = new google.maps.LatLng(la, ln);
+          var p2 = new google.maps.LatLng(evt.latLng.lat(), evt.latLng.lng());
 
 
-      });
+        });
 
-      map.setCenter(vMarker.position);
+        map.setCenter(vMarker.position);
 
-      vMarker.setMap(map);
-    }
-  </script>
-</body>
-
-</html>
+        vMarker.setMap(map);
+      }
+    </script>
+  </body>

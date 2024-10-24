@@ -30,6 +30,18 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
+              <label>เจ้าของหอ</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["username"];?></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
               <label>ประเภทเตียง</label>
             </div>
           </div>

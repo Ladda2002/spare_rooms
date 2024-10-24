@@ -4,28 +4,80 @@
 <?php
 require_once("header.php");
 ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" />
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script> 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <?php 
 
+// เรียกใช้ฟังก์ชันเพื่อดึงข้อมูลอพาร์ตเมนต์ทั้งหมด
 $allApartment = getAllApartment();
+
+// ดึงข้อมูลห้องปัจจุบันตาม id ที่ส่งมาใน URL
 $currentRoom = getCurrentRoom($_GET["id"]);
-if(isset($_POST["submit"])){
-  if($_POST["id"] == ""){
-    $room_gallery = $_FILES['room_gallery']['name'];
-    $total = count($_FILES['room_gallery']['name']);
-    saveRoomRental($_POST["apartment"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["room_remark"],$_FILES["contract_file"]["name"],$_POST["room_lat"],$_POST["room_lng"]);
-  }else{
-    $room_gallery = $_FILES['room_gallery']['name'];
-    $total = count($_FILES['room_gallery']['name']);
-    editRoomRental($_POST["id"],$_POST["apartment"],$_POST["room_name"],$_POST["bed_type"],$_POST["room_type"],$_POST["room_price"],$_POST["room_rent"],$_POST["room_detail"],$_FILES["room_image"]["name"],$room_gallery,$total,$_POST["users_id"],$_POST["room_category"],$_POST["room_remark"],$_FILES["contract_file"]["name"],$_POST["room_lat"],$_POST["room_lng"]);
-  }
+
+// ตรวจสอบว่ามีการส่งข้อมูลฟอร์มมาหรือไม่
+if (isset($_POST["submit"])) {
+    // ถ้า id ห้องว่าง (กรณีเพิ่มห้องใหม่)
+    if ($_POST["id"] == "") {
+        // ดึงชื่อไฟล์รูปภาพจากฟอร์ม
+        $room_gallery = $_FILES['room_gallery']['name'];
+        // นับจำนวนไฟล์ในอาร์เรย์ room_gallery
+        $total = count($_FILES['room_gallery']['name']);
+        
+        // เรียกใช้ฟังก์ชัน saveRoomRental เพื่อบันทึกข้อมูลห้องพักใหม่
+        saveRoomRental(
+            $_POST["apartment"],
+            $_POST["room_name"],
+            $_POST["bed_type"],
+            $_POST["room_type"],
+            $_POST["room_price"],
+            $_POST["room_rent"],
+            $_POST["room_detail"],
+            $_FILES["room_image"]["name"],
+            $room_gallery,
+            $total,
+            $_POST["users_id"],
+            $_POST["room_category"],
+            $_POST["room_remark"],
+            $_FILES["contract_file"]["name"],
+            $_POST["room_lat"],
+            $_POST["room_lng"]
+        );
+    } else {
+        // ถ้ามี id ห้อง (กรณีแก้ไขข้อมูลห้องพัก)
+        $room_gallery = $_FILES['room_gallery']['name'];
+        $total = count($_FILES['room_gallery']['name']);
+        
+        // เรียกใช้ฟังก์ชัน editRoomRental เพื่ออัปเดตข้อมูลห้องพัก
+        editRoomRental(
+            $_POST["id"],
+            $_POST["apartment"],
+            $_POST["room_name"],
+            $_POST["bed_type"],
+            $_POST["room_type"],
+            $_POST["room_price"],
+            $_POST["room_rent"],
+            $_POST["room_detail"],
+            $_FILES["room_image"]["name"],
+            $room_gallery,
+            $total,
+            $_POST["users_id"],
+            $_POST["room_category"],
+            $_POST["room_remark"],
+            $_FILES["contract_file"]["name"],
+            $_POST["room_lat"],
+            $_POST["room_lng"]
+        );
+    }
 }
 
-if($_GET["id"] == ""){
-  $txtHead = "เพิ่ม ห้องพัก";
-}else{
-  $txtHead = "แก้ไข ห้องพัก";
+if ($_GET["id"] == "") {
+    $txtHead = "เพิ่ม ห้องพัก";
+} else {
+    $txtHead = "แก้ไข ห้องพัก";
 }
 ?>
+
 <body onload="initialize();">
 
   <?php
@@ -53,7 +105,7 @@ if($_GET["id"] == ""){
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>หอพัก</label>
-                      <input type="text" class="form-control" id="apartment" name="apartment" value="<?php echo $currentRoom["apartment"];?>">
+                      <input type="text" class="form-control" id="autocomplete-search" name="apartment" value="<?php echo $currentRoom["apartment"];?>">
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -201,6 +253,13 @@ if($_GET["id"] == ""){
       readURL(this);
     });
   </script>
+  <script type="text/javascript">
+    $(function() {
+     $( "#autocomplete-search" ).autocomplete({
+      source: 'function/autocomplete.php',
+     });
+   });
+ </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqB-O_qmvUMh-A8N5AbFT2LBgXIUkG7Vk &callback=initMap" async defer></script>
   <script type="text/javascript">
     function initialize() {

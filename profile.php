@@ -5,13 +5,25 @@
 require_once("header.php");
 ?>
 <?php 
-
+ // ดึงข้อมูลผู้ใช้ปัจจุบันจากฟังก์ชัน getCurrentUser 
 $currentUser = getCurrentUser($_SESSION["id"]);
-if(isset($_POST["submit"])){
-  editProfile($_POST["id"],$_POST["username"],$_POST["password"],$_POST["address"],$_POST["email"],$_POST["phone"],$_POST["gender"],$_POST["status"],$_FILES["profile_img"]["name"]);
+if(isset($_POST["submit"])) {
+  // เรียกใช้ฟังก์ชัน editProfile เพื่อแก้ไขข้อมูลโปรไฟล์ของผู้ใช้
+  editProfile(
+    $_POST["id"], 
+    $_POST["username"], 
+    $_POST["password"], 
+    $_POST["address"],
+    $_POST["email"],
+    $_POST["phone"], 
+    $_POST["gender"], 
+    $_POST["status"], 
+    $_FILES["profile_img"]["name"] 
+  );
 }
 
 ?>
+
 <body>
 
   <?php

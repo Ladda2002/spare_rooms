@@ -14,7 +14,7 @@ require_once("header.php");
 
   <main class="" id="main-collapse">
 
-    <!-- Add your site or app content here -->
+    <!-- เพิ่มเนื้อหาเว็บไซต์ -->
 
     <div class="hero-full-wrapper">
       <div class="grid">
@@ -46,7 +46,9 @@ require_once("header.php");
 
       </div>
     </div>
+    <!-- สิ้นสุดการเพิ่มเนื้อหาเว็บไซต์ -->
   </main>
+
 
   <?php
   require_once("footer.php");

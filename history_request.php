@@ -16,8 +16,6 @@ $allHistoryUserRequest = getAllHistoryUserRequest($_SESSION["id"]);
 
   <main class="" id="main-collapse">
 
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ประวัติคำขอ</h1>
@@ -42,12 +40,22 @@ $allHistoryUserRequest = getAllHistoryUserRequest($_SESSION["id"]);
                   <td><?php echo $data["username"];?></td>
                   <td><?php echo $data["phone"];?></td>
                   <td><?php echo $data["email"];?></td>
-                  <td><?php echo $data["apartment"];?></td>
+                  <td><?php echo $data["apartment"] . "  " . $data["apart_name"]; ?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $request_map[$data["request_status"]];?></td>
                   <td style="text-align: right;">
-                    <a href="detail_history_request.php?id=<?php echo $data['id'];?>" class="btn btn-warning btn-lg">รายละเอียด</a>
-                  </td>
+                      <?php 
+                      // ตรวจสอบค่า request_status และกำหนด URL ตามเงื่อนไข
+                      if ($data["request_status"] == 1) {
+                          $url = "detail_history_request_finding_waiting.php?id=" . $data['id'];
+                      } elseif ($data["request_status"] == 2) {
+                          $url = "detail_history_request_finding_approve.php?id=" . $data['id'];
+                      } else {
+                        // ถ้า request_status ไม่มีค่าเป็น 1 หรือ 2 ให้ใช้ URL เป็น "#" 
+                          $url = "#"; 
+                      }
+                      ?>
+                      <a href="<?php echo $url; ?>" class="btn btn-warning btn-lg">รายละเอียด</a>
                 </tr>
               <?php } ?>
             <?php } ?>

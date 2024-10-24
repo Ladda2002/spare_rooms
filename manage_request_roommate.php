@@ -5,7 +5,8 @@
 require_once("header.php");
 ?>
 <?php 
-$allUserRequest = getAllUserRequest($_SESSION["id"]);
+//รียกใช้ฟังก์ชัน: ฟังก์ชัน getAllUserRequestStatus() 
+$allUserRequestStatus = getAllUserRequestStatus($_SESSION["id"]);
 
 
 ?>
@@ -17,9 +18,6 @@ $allUserRequest = getAllUserRequest($_SESSION["id"]);
 
 
   <main class="" id="main-collapse">
-
-    <!-- Add your site or app content here -->
-
     <div class="hero-full-wrapper">
       <div class="grid">
         <h1>ตรวจสอบคำขอ</h1>
@@ -36,15 +34,15 @@ $allUserRequest = getAllUserRequest($_SESSION["id"]);
             </tr>
           </thead>
           <tbody>
-            <?php if(empty($allUserRequest)){ ?>
+            <?php if(empty($allUserRequestStatus)){ ?>
             <?php }else{?>
               <?php $i=1;?>
-              <?php foreach($allUserRequest as $data){ ?>
+              <?php foreach($allUserRequestStatus as $data){ ?>
                 <tr>
                   <td><?php echo $data["username"];?></td>
                   <td><?php echo $data["phone"];?></td>
                   <td><?php echo $data["email"];?></td>
-                  <td><?php echo $data["apart_name"];?></td>
+                  <td><?php echo $data["apartment"] . "  " . $data["apart_name"]; ?></td>
                   <td><?php echo $data["room_name"];?></td>
                   <td><?php echo $request_map[$data["request_status"]];?></td>
                   <td style="text-align: right;">

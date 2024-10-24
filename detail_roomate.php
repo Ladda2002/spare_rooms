@@ -5,7 +5,7 @@
 require_once("header.php");
 ?>
 <?php 
-$currentRoom = getCurrentRoom($_GET["id"]);
+$currentRoom = getCurrentRoom($_GET["id"]); 
 $allRoomGallery = getAllRoomGallery($_GET["id"]);
 ?>
 <body onload="initialize();">
@@ -31,12 +31,26 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
+              <label>เจ้าของห้อง</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["username"];?></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
               <label>หอพัก</label>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentRoom["apartment"];?></label>
+              <label>
+                <?php echo $currentRoom["apartment"] . "  " . $currentRoom["apart_name"]; ?>
+              </label>
             </div>
           </div>
         </div>
@@ -103,6 +117,18 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
+              <label>เพศ</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $gender_map[$currentRoom["gender"]];?></label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
               <label>ความต้องการ</label>
             </div>
           </div>
@@ -127,7 +153,6 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div align="center">
           <a href="edit_request.php?id=<?php echo $_GET["id"];?>" class="btn btn-primary" title="ส่งคำขอรูมเมท"> ส่งคำขอรูมเมท</a>
         </div>
-        
       </div>
     </div>
 
@@ -149,7 +174,6 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <legend>ข้อมูลที่ตั้ง</legend>
         <div id="map_canvas" style="width: auto; height: 500px;"></div>
       </div>
-      
     </div>
 
   </main>

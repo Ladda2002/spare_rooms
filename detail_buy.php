@@ -32,30 +32,6 @@ $allRoomGallery = getAllRoomGallery($currentBuy["rooms_id"]);
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>หอพัก</label>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="form-group">
-              <label><?php echo $currentRoom["apart_name"];?></label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>ที่ตั้ง</label>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="form-group">
-              <label><?php echo $currentRoom["apart_address"];?></label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
               <label>ประเภทเตียง</label>
             </div>
           </div>

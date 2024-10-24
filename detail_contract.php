@@ -24,11 +24,22 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <img class="img-responsive" alt="" src="images/room/<?php echo $currentRoom["room_image"];?>">
       </div>
       <div class="col-xs-12 col-md-6">
-
         <h1>ห้อง <?php echo $currentRoom["room_name"];?></h1>
         <input type="hidden" class="form-control" id="lat" value="<?php echo $currentRoom["room_lat"];?>">
         <input type="hidden" class="form-control" id="lng" value="<?php echo $currentRoom["room_lng"];?>">
         <h3>ข้อมูลห้องพัก </h3>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>ผู้ขายสัญญาเช่า</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              <label><?php echo $currentRoom["username"];?></label>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
@@ -37,7 +48,9 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentRoom["apartment"];?></label>
+              <label>
+                <?php echo $currentRoom["apartment"] . "  " . $currentRoom["apart_name"]; ?>
+              </label>
             </div>
           </div>
         </div>
@@ -116,16 +129,16 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>เจ้าของสัญญา</label>
+              <label>วันที่สิ้นสุดสัญญา</label>
             </div>
           </div>
           <div class="col-md-8">
             <div class="form-group">
-              <label><?php echo $currentUserContract["username"];?></label>
+              <label><?php echo $currentRoom["contract_end"];?></label>
             </div>
           </div>
         </div>
-          <div class="row">
+        <div class="row">
           <div class="col-md-4">
             <div class="form-group">
               <label>ดาวน์โหลดไฟล์สัญญา</label>
@@ -140,7 +153,7 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <div align="center">
           <a href="edit_buy.php?id=<?php echo $_GET["id"];?>" class="btn btn-primary" title="ติดต่อขอซื้อสัญญาเช่า"> ติดต่อขอซื้อสัญญาเช่า</a>
         </div>
-        
+
       </div>
     </div>
 
@@ -162,7 +175,7 @@ $allRoomGallery = getAllRoomGallery($_GET["id"]);
         <legend>ข้อมูลที่ตั้ง</legend>
         <div id="map_canvas" style="width: auto; height: 500px;"></div>
       </div>
-      
+
     </div>
 
   </main>
